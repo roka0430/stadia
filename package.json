@@ -1,0 +1,32 @@
+{
+  "name": "stadia",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/roka0430/stadia#readme",
+  "bugs": {
+    "url": "https://github.com/roka0430/stadia/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roka0430/stadia.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.2",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
