@@ -21,18 +21,33 @@
     <footer>footer</footer>
   </div>
 
-  <div class="overlays" x-show="overlayId !== null">
+  <div class="overlays" x-show="overlayId !== null" x-cloak>
     <div class="overlay" id="overlay1" x-show="overlayId === $el.id">
-      overlay1
-      <button @click="overlayId = null">閉じる</button>
+      <div class="overlay-header">
+        <div class="overlay-header__left">
+          <button class="overlay-header__close" @click="closeOverlay()"></button>
+          <h2 class="overlay-header__title">overlay1</h2>
+        </div>
+        <div class="overlay-header__right"></div>
+      </div>
     </div>
     <div class="overlay" id="overlay2" x-show="overlayId === $el.id">
-      overlay2
-      <button @click="overlayId = null">閉じる</button>
+      <div class="overlay-header">
+        <div class="overlay-header__left">
+          <button class="overlay-header__close" @click="closeOverlay()"></button>
+          <h2 class="overlay-header__title">overlay2</h2>
+        </div>
+        <div class="overlay-header__right"></div>
+      </div>
     </div>
     <div class="overlay" id="overlay3" x-show="overlayId === $el.id">
-      overlay3
-      <button @click="overlayId = null">閉じる</button>
+      <div class="overlay-header">
+        <div class="overlay-header__left">
+          <button class="overlay-header__close" @click="closeOverlay()"></button>
+          <h2 class="overlay-header__title">overlay3</h2>
+        </div>
+        <div class="overlay-header__right"></div>
+      </div>
     </div>
   </div>
 
