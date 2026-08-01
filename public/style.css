@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "ZenKakuGothicNew";
+  src: url("fonts/ZenKakuGothicNew.ttf") format("trueType");
+}
+
 :root {
   --color-bg: #fafdff;
 
@@ -25,7 +30,14 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-size: 16px;
+  font-family: "ZenKakuGothicNew", sans-serif;
   user-select: none;
+}
+
+kbd,
+input,
+textarea {
+  font-family: "ZenKakuGothicNew", sans-serif;
 }
 
 [x-cloak] {
