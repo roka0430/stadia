@@ -55,6 +55,7 @@ main {
 
 .main-section {
   display: flex;
+  gap: 10px;
   flex-direction: column;
 }
 
@@ -62,11 +63,61 @@ main {
   font-size: 1.2rem;
 }
 
+.main-section__subtitle {
+  font-size: 0.8rem;
+  margin: 0 0 6px 0;
+}
+
 /* ---- analytics ---- */
 
 .analytics__study-hours {
   display: flex;
   justify-content: space-around;
+
+  margin: 0 0 20px 0;
+  padding: 5px 0 6px 0;
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+}
+
+/* ---- weekly-chart ---- */
+
+.analytics__weekly-chart {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+
+  height: 200px;
+  padding: 10px;
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+}
+
+.weekly-chart__bars {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-around;
+}
+
+.weekly-chart__bar {
+  width: calc(100% / 7 - 30px);
+  background: transparent;
+  background: linear-gradient(to top, red 0% 30%, green 30% 60%, transparent 60%);
+}
+
+.weekly-chart__labels {
+  display: flex;
+  justify-content: space-around;
+}
+
+.weekly-chart__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 0.9rem;
+  line-height: 1;
 }
 
 /* ############################## overlays ############################## */
