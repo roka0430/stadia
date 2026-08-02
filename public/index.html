@@ -9,28 +9,37 @@
 </head>
 
 <body x-data="body">
-  <div class="app">
-    <header>header</header>
+  <h1 x-show="false">Stadia</h1>
 
-    <main>
-      <button @click="overlayId = 'overlay1'">overlay1</button>
-      <button @click="overlayId = 'overlay2'">overlay2</button>
-      <button @click="overlayId = 'overlay3'">overlay3</button>
-    </main>
-
-    <footer>footer</footer>
-  </div>
+  <main>
+    <section class="main-section analytics">
+      <h2 class="main-section__title">Analytics</h2>
+      <div class="main-section__content">
+        <div class="analytics__study-hours">
+          <div class="analytics__study-hours-item">
+            <span>今日</span>
+            <span><span x-text="studyHours.today"></span>時間</span>
+          </div>
+          <div class="analytics__study-hours-item">
+            <span>今日</span>
+            <span><span x-text="studyHours.period"></span>時間</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <div class="overlays" x-show="overlayId !== null" x-cloak>
-    <div class="overlay" id="overlay1" x-show="overlayId === $el.id">
+    <div class="overlay" id="study" x-show="overlayId === $el.id">
       <div class="overlay-header">
         <div class="overlay-header__left">
           <button class="overlay-header__close" @click="closeOverlay()"></button>
-          <h2 class="overlay-header__title">overlay1</h2>
+          <h2 class="overlay-header__title">study</h2>
         </div>
         <div class="overlay-header__right"></div>
       </div>
     </div>
+
     <div class="overlay" id="overlay2" x-show="overlayId === $el.id">
       <div class="overlay-header">
         <div class="overlay-header__left">
@@ -40,6 +49,7 @@
         <div class="overlay-header__right"></div>
       </div>
     </div>
+
     <div class="overlay" id="overlay3" x-show="overlayId === $el.id">
       <div class="overlay-header">
         <div class="overlay-header__left">

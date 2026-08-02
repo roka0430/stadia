@@ -1,6 +1,10 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("body", () => ({
     overlayId: null,
+    studyHours: {
+      today: 10,
+      period: 20,
+    },
 
     overlayCloseHandler: {
       overlay1: () => {

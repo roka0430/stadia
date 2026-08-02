@@ -44,9 +44,32 @@ textarea {
   display: none !important;
 }
 
-.app {
+/* ############################## main ############################## */
+
+main {
+  width: 800px;
+  margin: 0 auto 0;
+  padding: 20px 50px;
   z-index: 5000;
 }
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-section__title {
+  font-size: 1.2rem;
+}
+
+/* ---- analytics ---- */
+
+.analytics__study-hours {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* ############################## overlays ############################## */
 
 .overlays {
   position: absolute;
@@ -113,6 +136,8 @@ textarea {
 .overlay-header__title {
   font-size: 1.2rem;
 }
+
+/* ############################## shortcut-bar ############################## */
 
 .shortcut-bar {
   display: flex;
