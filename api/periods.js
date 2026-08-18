@@ -3,12 +3,16 @@ import fs from "fs";
 import { load } from "js-yaml";
 
 const router = express.Router();
-
 const periods = load(fs.readFileSync("./data/periods.yaml"));
+
+const findPeriod = (id) => {
+  return periods.find((period) => period.id === id);
+};
 
 router.get("/:id/study-time", (req, res) => {
   const id = Number(req.params.id);
-  const period = periods.find((period) => period.id === id);
+
+  const period = findPeriod(id);
 
   if (!period) {
     return res.status(404).json({
@@ -35,7 +39,8 @@ router.get("/:id/study-time", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const id = Number(req.params.id);
-  const period = periods.find((period) => period.id === id);
+
+  const period = findPeriod(id);
 
   if (!period) {
     return res.status(404).json({
