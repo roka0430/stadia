@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "ZenKakuGothicNew";
+  src: url("../font/ZenKakuGothicNew-Regular.ttf") format("trueType");
+}
+
 :root {
   --color-bg: #212121;
   --color-surface: #2f2f2f;
@@ -28,6 +33,7 @@ body {
 body {
   background: var(--color-bg);
   color: var(--color-text);
+  font-family: "ZenKakuGothicNew", sans-serif;
 }
 
 a {
@@ -43,4 +49,5 @@ button,
 input,
 textarea {
   color: var(--color-text);
+  font-family: "ZenKakuGothicNew", sans-serif;
 }
