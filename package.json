@@ -1,0 +1,24 @@
+{
+  "name": "stadia",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/roka0430/stadia#readme",
+  "bugs": {
+    "url": "https://github.com/roka0430/stadia/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roka0430/stadia.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "js-yaml": "^5.4.0"
+  }
+}
