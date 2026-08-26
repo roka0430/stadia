@@ -46,6 +46,8 @@ main {
   border-radius: 5px;
 
   font-size: 0.9rem;
+
+  cursor: pointer;
 }
 
 .category.opened .category__current {
@@ -54,6 +56,15 @@ main {
 
 .category__current-name {
   padding-bottom: 2px;
+}
+
+.category__dropdown-indicator {
+  stroke: var(--color-text-muted);
+  transition: all 0.1s;
+}
+
+.category__current:hover .category__dropdown-indicator {
+  stroke: var(--color-text);
 }
 
 .category__dropdown {
