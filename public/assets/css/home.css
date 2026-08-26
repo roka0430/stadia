@@ -163,10 +163,10 @@ header {
 }
 
 .home__start {
-  flex: 1;
+  flex: 3;
 }
 .home__today {
-  flex: 1;
+  flex: 2;
 }
 .home__weekly {
   flex: 3;
@@ -181,6 +181,33 @@ header {
 /* start */
 
 /* today */
+
+.home__today {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 3fr min-content 2fr;
+}
+
+.today__separator {
+  border-left: solid 1px var(--color-border);
+}
+
+.today__box {
+}
+
+.today__box-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.today__box-content {
+  padding-left: 12px;
+  font-size: 2rem;
+}
+
+.today__box-content .unit {
+  font-size: 1.5rem;
+}
 
 /* weekly */
 
