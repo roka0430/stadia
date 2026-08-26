@@ -100,23 +100,68 @@ document.addEventListener("alpine:init", () => {
   }));
 
   Alpine.data("home", () => ({
-    get subjectNames() {
-      if (!this.currentCategory) {
-        return;
+    get records() {
+      if (this.currentCategory === null) {
+        return [];
       }
 
-      const names = this.currentCategory.records.map(({ name }) => name);
+      return this.currentCategory.records;
+    },
+
+    get subjectNames() {
+      const names = this.records.map(({ name }) => name);
       return [...new Set(names)];
     },
 
-    calcSubjectStudyTime() {
+    get totalStudyTime() {
+      return this.records.reduce((sum, { time }) => sum + time, 0);
+    },
+
+    get subjectStudyTime() {
       const studyTimes = {};
 
-      for (const { name, time } of this.currentCategory.records) {
+      for (const { name, time } of this.currentCategory?.records ?? []) {
         studyTimes[name] = (studyTimes[name] ?? 0) + time;
       }
 
       return studyTimes;
+    },
+
+    get sortedSubjectStudyTime() {
+      const entries = Object.entries(this.subjectStudyTime);
+      return entries.sort(([, timeA], [, timeB]) => timeB - timeA);
+    },
+
+    get studyDates() {
+      const dates = this.records.map(({ date }) => date);
+      return [...new Set(dates)];
+    },
+
+    formatStudyTime(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+
+      if (hours === 0) {
+        return `${minutes}分`;
+      }
+
+      if (minutes === 0) {
+        return `${hours}時間`;
+      }
+
+      return `${hours}時間${minutes}分`;
+    },
+
+    calcPercent(numerator, denominator) {
+      if (denominator === 0) {
+        return 0;
+      }
+
+      return numerator / denominator;
+    },
+
+    formatPercent(value) {
+      return `${(value * 100).toFixed(1)}%`;
     },
   }));
 });

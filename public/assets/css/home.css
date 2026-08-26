@@ -156,8 +156,7 @@ header {
 }
 
 .home__col {
-  padding-block: 16px;
-  padding-inline: 24px;
+  padding: 16px;
 
   background: var(--color-surface);
   border-radius: 8px;
@@ -178,3 +177,100 @@ header {
 .home__recent {
   flex: 1;
 }
+
+/* start */
+
+/* today */
+
+/* weekly */
+
+/* total */
+
+.home__total {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.total__cards {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.total__card {
+  padding-block: 8px;
+  padding-inline: 12px;
+
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+}
+
+.total__card-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.total__card-value {
+  margin-top: 1px;
+  padding-left: 6px;
+}
+
+.total__subjects {
+  flex: 1;
+
+  padding-block: 8px;
+  padding-inline: 12px;
+
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.total__no-record-message {
+  padding-left: 6px;
+  color: var(--color-text-muted);
+}
+
+.total__subjects-label {
+  margin-bottom: 2px;
+
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.total__subject {
+  display: flex;
+  gap: 10px;
+
+  padding-left: 6px;
+}
+
+.total__subject-name {
+  flex: 2;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.total__subject-name::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 16px;
+  background: linear-gradient(to right, transparent 0%, var(--color-surface) 100%);
+}
+
+.total__subject-time {
+  flex: 3;
+}
+
+/* recent */

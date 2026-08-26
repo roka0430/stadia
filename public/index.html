@@ -41,7 +41,43 @@
     </div>
     <div class="home__row">
       <section class="home__col home__weekly">weekly</section>
-      <section class="home__col home__total">total</section>
+      <section class="home__col home__total">
+        <div class="total__cards">
+          <div class="total__card">
+            <div class="total__card-label">総学習時間</div>
+            <div class="total__card-value" x-text="formatStudyTime(totalStudyTime)">128時間42分</div>
+          </div>
+          <div class="total__card">
+            <div class="total__card-label">総学習回数</div>
+            <div class="total__card-value"><span x-text="records.length"></span>回</div>
+          </div>
+          <div class="total__card">
+            <div class="total__card-label">学習日数</div>
+            <div class="total__card-value"><span x-text="studyDates.length"></span>日</div>
+          </div>
+          <div class="total__card">
+            <div class="total__card-label">平均学習時間</div>
+            <div class="total__card-value"><span x-text="formatStudyTime(records.length ? totalStudyTime / records.length : 0)"></span></div>
+          </div>
+        </div>
+        <div class="total__subjects">
+          <div class="total__subjects-label">全科目</div>
+          <template x-if="records.length === 0">
+            <div class="total__no-record-message">
+              科目はありません
+            </div>
+          </template>
+          <template x-for="[name, time] in sortedSubjectStudyTime">
+            <div class="total__subject">
+              <div class="total__subject-name" x-text="name"></div>
+              <div class="total__subject-time">
+                <span x-text="formatStudyTime(time)"></span>
+                ( <span x-text="formatPercent(calcPercent(time, totalStudyTime))">100%</span> )
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
     </div>
     <div class="home__row">
       <section class="home__col home__recent">recent</section>
