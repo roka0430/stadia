@@ -98,10 +98,13 @@ main {
   padding-block: 4px 7px;
   padding-inline: 12px;
 
+  background: var(--color-bg);
   border-bottom: solid 1px var(--color-border);
 
   font-size: 0.8rem;
   font-weight: bold;
+
+  z-index: 20;
 }
 
 .category__dropdown-option {
