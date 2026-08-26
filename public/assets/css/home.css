@@ -146,18 +146,13 @@ header {
   flex: 1;
 
   display: flex;
-  gap: 16px;
+  gap: 20px;
   flex-direction: column;
-
-  padding: 16px;
-
-  border: solid 1px var(--color-border);
-  border-radius: 8px;
 }
 
 .home__row {
   display: flex;
-  gap: 16px;
+  gap: 20px;
 }
 
 .home__col {
