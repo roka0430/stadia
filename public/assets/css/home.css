@@ -180,6 +180,17 @@ header {
 
 /* start */
 
+.start__button {
+  padding-block: 8px;
+  padding-inline: 16px;
+
+  background: var(--color-primary);
+  border: none;
+  border-radius: 8px;
+
+  font-size: 1.5rem;
+}
+
 /* today */
 
 .home__today {
