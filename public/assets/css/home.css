@@ -1,15 +1,17 @@
 body {
+  display: flex;
+  align-items: center;
+
   overflow-x: scroll;
   scrollbar-width: none;
 }
 
 .wrapper {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   flex-direction: column;
 
   width: clamp(900px, 100%, 1100px);
-  height: 100%;
 
   margin-inline: auto;
   padding: 20px;
