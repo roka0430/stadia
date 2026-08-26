@@ -10,140 +10,144 @@
 </head>
 
 <body x-data="body">
-  <header>
-    <div class="category" x-data="category" :class="{'opened': isOpen}" @click.outside="isOpen = false">
-      <button class="category__current" @click="isOpen = !isOpen">
-        <span class="category__current-name" x-text="currentCategory?.name"></span>
-        <svg class="category__dropdown-indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M8 9l4 -4l4 4" />
-          <path d="M16 15l-4 4l-4 -4" />
-        </svg>
-      </button>
-      <div class="category__dropdown">
-        <div class="category__dropdown-label">Select category</div>
-        <template x-for="category in categories">
-          <div
-            class="category__dropdown-option"
-            :class="{'current': category.id === currentCategory?.id}"
-            x-text="category.name"
-            @click="selectCategory(category.id)">
-          </div>
-        </template>
-      </div>
-    </div>
-  </header>
+  <div class="wrapper">
 
-  <main class="home" x-data="home">
-    <div class="home__row">
-      <section class="home__col home__start">
-        <button class="start__button">学習を開始</button>
-      </section>
-      <section class="home__col home__today">
-        <div class="today__box">
-          <div class="today__box-label">今日の学習時間</div>
-          <div class="today__box-content">
-            <div class="today__data-value">
-              <span>12</span>
-              <span class="unit">時間</span>
-              <span>59</span>
-              <span class="unit">分</span>
-            </div>
-            <div class="today__data-change">+1h12m</div>
-          </div>
-        </div>
-        <div class="today__separator"></div>
-        <div class="today__box">
-          <div class="today__box-label">今日の学習回数</div>
-          <div class="today__box-content">
-            <div class="today__data-value">
-              <span>23</span>
-              <span class="unit">回</span>
-            </div>
-            <div class="today__data-change">-4回</div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <div class="home__row">
-      <section class="home__col home__weekly">
-        <div class="weekly__graph">
-          <div class="weekly__bars">
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-            <div class="weekly__bar">
-              <div class="weekly__bar-value">12.2h</div>
-            </div>
-          </div>
-          <div class="weekly__labels">
-            <div class="weekly__label">20日</div>
-            <div class="weekly__label">21日</div>
-            <div class="weekly__label">22日</div>
-            <div class="weekly__label">23日</div>
-            <div class="weekly__label">24日</div>
-            <div class="weekly__label">25日</div>
-            <div class="weekly__label">今日</div>
-          </div>
-        </div>
-      </section>
-      <section class="home__col home__total">
-        <div class="total__cards">
-          <div class="total__card">
-            <div class="total__card-label">総学習時間</div>
-            <div class="total__card-value" x-text="formatStudyTime(totalStudyTime)">128時間42分</div>
-          </div>
-          <div class="total__card">
-            <div class="total__card-label">総学習回数</div>
-            <div class="total__card-value"><span x-text="records.length"></span>回</div>
-          </div>
-          <div class="total__card">
-            <div class="total__card-label">学習日数</div>
-            <div class="total__card-value"><span x-text="studyDates.length"></span>日</div>
-          </div>
-          <div class="total__card">
-            <div class="total__card-label">平均学習時間</div>
-            <div class="total__card-value"><span x-text="formatStudyTime(records.length ? totalStudyTime / records.length : 0)"></span></div>
-          </div>
-        </div>
-        <div class="total__subjects">
-          <div class="total__subjects-label">全科目</div>
-          <template x-if="records.length === 0">
-            <div class="total__no-record-message">
-              科目はありません
+    <header>
+      <div class="category" x-data="category" :class="{'opened': isOpen}" @click.outside="isOpen = false">
+        <button class="category__current" @click="isOpen = !isOpen">
+          <span class="category__current-name" x-text="currentCategory?.name"></span>
+          <svg class="category__dropdown-indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 9l4 -4l4 4" />
+            <path d="M16 15l-4 4l-4 -4" />
+          </svg>
+        </button>
+        <div class="category__dropdown">
+          <div class="category__dropdown-label">Select category</div>
+          <template x-for="category in categories">
+            <div
+              class="category__dropdown-option"
+              :class="{'current': category.id === currentCategory?.id}"
+              x-text="category.name"
+              @click="selectCategory(category.id)">
             </div>
           </template>
-          <template x-for="[name, time] in sortedSubjectStudyTime">
-            <div class="total__subject">
-              <div class="total__subject-name" x-text="name"></div>
-              <div class="total__subject-time">
-                <span x-text="formatStudyTime(time)"></span>
-                ( <span x-text="formatPercent(calcPercent(time, totalStudyTime))">100%</span> )
+        </div>
+      </div>
+    </header>
+
+    <main class="home" x-data="home">
+      <div class="home__row">
+        <section class="home__col home__start">
+          <button class="start__button">学習を開始</button>
+        </section>
+        <section class="home__col home__today">
+          <div class="today__box">
+            <div class="today__box-label">今日の学習時間</div>
+            <div class="today__box-content">
+              <div class="today__data-value">
+                <span>12</span>
+                <span class="unit">時間</span>
+                <span>59</span>
+                <span class="unit">分</span>
+              </div>
+              <div class="today__data-change">+1h12m</div>
+            </div>
+          </div>
+          <div class="today__separator"></div>
+          <div class="today__box">
+            <div class="today__box-label">今日の学習回数</div>
+            <div class="today__box-content">
+              <div class="today__data-value">
+                <span>23</span>
+                <span class="unit">回</span>
+              </div>
+              <div class="today__data-change">-4回</div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="home__row">
+        <section class="home__col home__weekly">
+          <div class="weekly__graph">
+            <div class="weekly__bars">
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
+              </div>
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
+              </div>
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
+              </div>
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
+              </div>
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
+              </div>
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
+              </div>
+              <div class="weekly__bar">
+                <div class="weekly__bar-value">12.2h</div>
               </div>
             </div>
-          </template>
-        </div>
-      </section>
-    </div>
-    <div class="home__row">
-      <section class="home__col home__recent">recent</section>
-    </div>
-  </main>
+            <div class="weekly__labels">
+              <div class="weekly__label">20日</div>
+              <div class="weekly__label">21日</div>
+              <div class="weekly__label">22日</div>
+              <div class="weekly__label">23日</div>
+              <div class="weekly__label">24日</div>
+              <div class="weekly__label">25日</div>
+              <div class="weekly__label">今日</div>
+            </div>
+          </div>
+        </section>
+        <section class="home__col home__total">
+          <div class="total__cards">
+            <div class="total__card">
+              <div class="total__card-label">総学習時間</div>
+              <div class="total__card-value" x-text="formatStudyTime(totalStudyTime)">128時間42分</div>
+            </div>
+            <div class="total__card">
+              <div class="total__card-label">総学習回数</div>
+              <div class="total__card-value"><span x-text="records.length"></span>回</div>
+            </div>
+            <div class="total__card">
+              <div class="total__card-label">学習日数</div>
+              <div class="total__card-value"><span x-text="studyDates.length"></span>日</div>
+            </div>
+            <div class="total__card">
+              <div class="total__card-label">平均学習時間</div>
+              <div class="total__card-value"><span x-text="formatStudyTime(records.length ? totalStudyTime / records.length : 0)"></span></div>
+            </div>
+          </div>
+          <div class="total__subjects">
+            <div class="total__subjects-label">全科目</div>
+            <template x-if="records.length === 0">
+              <div class="total__no-record-message">
+                科目はありません
+              </div>
+            </template>
+            <template x-for="[name, time] in sortedSubjectStudyTime">
+              <div class="total__subject">
+                <div class="total__subject-name" x-text="name"></div>
+                <div class="total__subject-time">
+                  <span x-text="formatStudyTime(time)"></span>
+                  ( <span x-text="formatPercent(calcPercent(time, totalStudyTime))">100%</span> )
+                </div>
+              </div>
+            </template>
+          </div>
+        </section>
+      </div>
+      <div class="home__row">
+        <section class="home__col home__recent">recent</section>
+      </div>
+    </main>
+  </div>
+
 
   <script src="assets/js/home.js" defer></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
