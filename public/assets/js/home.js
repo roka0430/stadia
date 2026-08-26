@@ -1,1 +1,5 @@
-console.log("Welcome to Stadia!");
+document.addEventListener("alpine:init", () => {
+  Alpine.data("category", () => ({
+    isOpen: false,
+  }));
+});

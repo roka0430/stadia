@@ -1,0 +1,129 @@
+body {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+
+  padding-block: 24px;
+  padding-inline: 32px;
+}
+
+header {
+  display: flex;
+  justify-content: right;
+}
+
+main {
+  flex: 1;
+
+  padding-block: 8px;
+  padding-inline: 16px;
+
+  border: solid 1px var(--color-border);
+  border-radius: 8px;
+}
+
+/*------------------------------ category ------------------------------*/
+
+.category {
+  position: relative;
+
+  width: 350px;
+  height: 40px;
+}
+
+.category__current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 100%;
+
+  padding-inline: 12px;
+
+  background: none;
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+
+  font-size: 0.9rem;
+}
+
+.category.opened .category__current {
+  border-radius: 5px 5px 0 0;
+}
+
+.category__current-name {
+  padding-bottom: 2px;
+}
+
+.category__dropdown {
+  display: none;
+
+  position: absolute;
+  top: calc(100% - 1px);
+  right: 0;
+  left: 0;
+
+  max-height: 200px;
+
+  background: var(--color-bg);
+  border: solid 1px var(--color-border);
+  border-radius: 0 0 5px 5px;
+
+  overflow-y: scroll;
+  scrollbar-width: none;
+
+  z-index: 10;
+}
+
+.category.opened .category__dropdown {
+  display: block;
+}
+
+.category__dropdown-label {
+  position: sticky;
+  top: 0;
+
+  padding-block: 4px 7px;
+  padding-inline: 12px;
+
+  border-bottom: solid 1px var(--color-border);
+
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.category__dropdown-option {
+  position: relative;
+
+  padding-block: 5px 7.5px;
+  padding-inline: 32px 12px;
+
+  border-bottom: solid 1px var(--color-border);
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+}
+
+.category__dropdown-option:last-child {
+  border: none;
+}
+
+.category__dropdown-option::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 16px;
+  transform: translateY(-50%) rotate(45deg);
+
+  width: 4px;
+  height: 8px;
+
+  border-right: solid 2px var(--color-text);
+  border-bottom: solid 2px var(--color-text);
+}
+
+.category__dropdown-option:hover {
+  background: var(--color-surface);
+}

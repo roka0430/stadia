@@ -10,6 +10,24 @@
 </head>
 
 <body>
+  <header>
+    <div class="category" x-data="category" :class="{'opened': isOpen}" @click.outside="isOpen = false">
+      <button class="category__current" @click="isOpen = !isOpen">
+        <span class="category__current-name">現在のカテゴリ</span>
+      </button>
+      <div class="category__dropdown">
+        <div class="category__dropdown-label">Select category</div>
+        <div class="category__dropdown-option">カテゴリ1</div>
+        <div class="category__dropdown-option">カテゴリ2</div>
+        <div class="category__dropdown-option">カテゴリ3</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    メイン
+  </main>
+
   <script src="assets/js/home.js" defer></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
