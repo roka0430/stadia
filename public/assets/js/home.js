@@ -99,7 +99,7 @@ document.addEventListener("alpine:init", () => {
     },
   }));
 
-  Alpine.data("main", () => ({
+  Alpine.data("home", () => ({
     get subjectNames() {
       if (!this.currentCategory) {
         return;

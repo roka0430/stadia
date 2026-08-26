@@ -34,10 +34,18 @@
     </div>
   </header>
 
-  <main x-data="main">
-    <template x-for="name in subjectNames">
-      <div x-text="name"></div>
-    </template>
+  <main class="home" x-data="home">
+    <div class="home__row">
+      <section class="home__col home__start">start</section>
+      <section class="home__col home__today">today</section>
+    </div>
+    <div class="home__row">
+      <section class="home__col home__weekly">weekly</section>
+      <section class="home__col home__total">total</section>
+    </div>
+    <div class="home__row">
+      <section class="home__col home__recent">recent</section>
+    </div>
   </main>
 
   <script src="assets/js/home.js" defer></script>
