@@ -34,8 +34,10 @@
     </div>
   </header>
 
-  <main>
-    メイン
+  <main x-data="main">
+    <template x-for="name in subjectNames">
+      <div x-text="name"></div>
+    </template>
   </main>
 
   <script src="assets/js/home.js" defer></script>

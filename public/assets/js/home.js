@@ -26,7 +26,7 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      this.initCurrentCategory();
+      await this.initCurrentCategory();
     },
 
     loadLocalStorage() {
@@ -96,6 +96,27 @@ document.addEventListener("alpine:init", () => {
       this.currentCategory = await this.loadCategory(categoryId);
       this.storage[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
       this.isOpen = false;
+    },
+  }));
+
+  Alpine.data("main", () => ({
+    get subjectNames() {
+      if (!this.currentCategory) {
+        return;
+      }
+
+      const names = this.currentCategory.records.map(({ name }) => name);
+      return [...new Set(names)];
+    },
+
+    calcSubjectStudyTime() {
+      const studyTimes = {};
+
+      for (const { name, time } of this.currentCategory.records) {
+        studyTimes[name] = (studyTimes[name] ?? 0) + time;
+      }
+
+      return studyTimes;
     },
   }));
 });
