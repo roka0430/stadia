@@ -9,17 +9,22 @@
   <title>Stadia</title>
 </head>
 
-<body>
+<body x-data="body">
   <header>
     <div class="category" x-data="category" :class="{'opened': isOpen}" @click.outside="isOpen = false">
       <button class="category__current" @click="isOpen = !isOpen">
-        <span class="category__current-name">現在のカテゴリ</span>
+        <span class="category__current-name" x-text="currentCategory?.name"></span>
       </button>
       <div class="category__dropdown">
         <div class="category__dropdown-label">Select category</div>
-        <div class="category__dropdown-option">カテゴリ1</div>
-        <div class="category__dropdown-option">カテゴリ2</div>
-        <div class="category__dropdown-option">カテゴリ3</div>
+        <template x-for="category in categories">
+          <div
+            class="category__dropdown-option"
+            :class="{'current': category.id === currentCategory?.id}"
+            x-text="category.name"
+            @click="selectCategory(category.id)">
+          </div>
+        </template>
       </div>
     </div>
   </header>

@@ -110,7 +110,7 @@ main {
   border: none;
 }
 
-.category__dropdown-option::before {
+.category__dropdown-option.current::before {
   content: "";
   position: absolute;
   top: calc(50% - 1px);
