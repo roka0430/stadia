@@ -179,24 +179,23 @@ document.addEventListener("alpine:init", () => {
       return `${(value * 100).toFixed(1)}%`;
     },
 
-    get subjectStudyTime() {
-      const studyTimes = {};
+    get subjectStudyData() {
+      const studyData = {};
 
       for (const { name, time } of this.currentCategory?.records ?? []) {
-        studyTimes[name] = (studyTimes[name] ?? 0) + time;
+        studyData[name] = (studyData[name] ?? 0) + time;
       }
 
-      return studyTimes;
+      for (const key of Object.keys(studyData)) {
+        studyData[key] = this.calcStudyData(studyData[key]);
+      }
+
+      return studyData;
     },
 
-    get sortedSubjectStudyTime() {
-      const entries = Object.entries(this.subjectStudyTime);
-      return entries.sort(([, timeA], [, timeB]) => timeB - timeA);
-    },
-
-    get studyDates() {
-      const dates = this.records.map(({ date }) => date);
-      return [...new Set(dates)];
+    get sortedSubjectStudyData() {
+      const entries = Object.entries(this.subjectStudyData);
+      return entries.sort(([, { seconds: timeA }], [, { seconds: timeB }]) => timeB - timeA);
     },
 
     getRecordsByPastDays(days) {
@@ -223,6 +222,11 @@ document.addEventListener("alpine:init", () => {
       }
 
       return records;
+    },
+
+    get studyDates() {
+      const dates = this.records.map(({ date }) => date);
+      return [...new Set(dates)];
     },
   }));
 });

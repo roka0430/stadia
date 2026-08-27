@@ -78,12 +78,12 @@
                 科目はありません
               </div>
             </template>
-            <template x-for="[name, time] in sortedSubjectStudyTime">
+            <template x-for="[name, data] in sortedSubjectStudyData">
               <div class="statistics__subjects-list-item">
                 <div x-text="name"></div>
                 <div>
-                  <span x-text="calcStudyData(time).string"></span>
-                  (<span x-text="calcPercent(time, totalStudyData.seconds)">100%</span>)
+                  <span x-text="data.string"></span>
+                  (<span x-text="calcPercent(data.seconds, totalStudyData.seconds)">100%</span>)
                 </div>
               </div>
             </template>
