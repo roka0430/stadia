@@ -268,6 +268,8 @@ document.addEventListener("alpine:init", () => {
   }));
 
   Alpine.data("study", () => ({
+    isPaused: true,
+
     get isStudying() {
       return this.storage?.[STORAGE_KEYS.IS_STUDYING];
     },

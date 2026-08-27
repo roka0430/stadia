@@ -686,3 +686,66 @@ header {
   color: var(--color-text);
   background: var(--color-success);
 }
+
+.study__content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-80px);
+}
+
+.study__timer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.study__timer-content {
+  font-size: 10rem;
+}
+
+.study__timer-content span {
+  position: relative;
+  top: -0.18em;
+  margin-inline: 0.1em;
+  font-size: 0.8em;
+}
+
+.study__timer-indicator {
+  position: relative;
+  width: 50%;
+  height: 2px;
+  overflow: hidden;
+}
+
+.study__timer-indicator::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  border-top: solid 2px var(--color-primary);
+  animation: timer-indicator-animation 2s forwards ease-out infinite;
+}
+
+.study__timer.is-paused .study__timer-indicator::after {
+  border-color: var(--color-border);
+  animation: none;
+}
+
+@keyframes timer-indicator-animation {
+  0%,
+  10% {
+    transform: translateX(-100%);
+  }
+  90%,
+  100% {
+    transform: translateX(100%);
+  }
+}
