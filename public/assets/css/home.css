@@ -186,6 +186,12 @@ header {
 
 /* start */
 
+.home__start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .start__button {
   padding-block: 8px;
   padding-inline: 16px;
@@ -195,6 +201,8 @@ header {
   border-radius: 8px;
 
   font-size: 1.5rem;
+
+  cursor: pointer;
 }
 
 /* today */
