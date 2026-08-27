@@ -87,6 +87,7 @@
             }">
             <div
               class="statistics__subjects-circle"
+              :class="{'no-subject': sortedSubjectStudyData.length === 0}"
               :style="{
                 '--subject-1': `${subjectPercentages[0] ?? 100}%`,
                 '--subject-2': `${subjectPercentages[1] ?? 100}%`,
