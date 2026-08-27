@@ -1,9 +1,11 @@
 const STORAGE_KEYS = {
   CURRENT_CATEGORY_ID: "stadia:current_category_id",
+  IS_STUDYING: "stadia:is_studying",
 };
 
 const STORAGE_DEFAULT = {
   [STORAGE_KEYS.CURRENT_CATEGORY_ID]: null,
+  [STORAGE_KEYS.IS_STUDYING]: false,
 };
 
 document.addEventListener("alpine:init", () => {
@@ -258,6 +260,20 @@ document.addEventListener("alpine:init", () => {
       };
 
       return format.replace(/YYYY|YY|MM|M|DD|D|HH|H|mm|m|ss|s/g, (token) => values[token]);
+    },
+
+    startStudy() {
+      this.storage[STORAGE_KEYS.IS_STUDYING] = true;
+    },
+  }));
+
+  Alpine.data("study", () => ({
+    get isStudying() {
+      return this.storage?.[STORAGE_KEYS.IS_STUDYING];
+    },
+
+    exitStudy() {
+      this.storage[STORAGE_KEYS.IS_STUDYING] = false;
     },
   }));
 });

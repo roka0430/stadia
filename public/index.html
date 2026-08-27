@@ -11,7 +11,6 @@
 
 <body x-data="body">
   <div class="wrapper">
-
     <header>
       <div class="category" x-data="category" :class="{'opened': isOpen}" @click.outside="isOpen = false">
         <button class="category__current" @click="isOpen = !isOpen">
@@ -38,7 +37,7 @@
 
     <main class="home" x-data="home">
       <section class="home__section home__start">
-        <button class="start__button">学習を開始</button>
+        <button class="start__button" @click="startStudy()">学習を開始</button>
       </section>
       <section class="home__section home__today">
         <div class="today__box">
@@ -190,6 +189,13 @@
         </div>
       </section>
     </main>
+
+    <div class="study" x-data="study" x-show="isStudying">
+      <div class="study__header">
+        <button class="study__exit" @click="exitStudy()" title="中断する">×</button>
+      </div>
+      <div class="study__content"></div>
+    </div>
   </div>
 
 

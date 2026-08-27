@@ -622,3 +622,54 @@ header {
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
+
+/*------------------------------ study ------------------------------*/
+
+.study {
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background: var(--color-bg);
+}
+
+.study__header {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 60px;
+  padding-inline: 24px;
+  padding-bottom: 1px;
+
+  border-bottom: solid 1px var(--color-border);
+}
+
+.study__exit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  padding-bottom: 4px;
+
+  background: none;
+  border: none;
+
+  color: var(--color-text-muted);
+  font-size: 2rem;
+
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.study__exit:hover {
+  color: var(--color-text);
+}
