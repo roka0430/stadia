@@ -305,6 +305,12 @@ document.addEventListener("alpine:init", () => {
     },
 
     exitStudy() {
+      if (this.time > 0) {
+        if (!confirm("終了すると内容は失われます。よろしいですか？")) {
+          return;
+        }
+      }
+
       clearTimeout(this.timeout);
       this.storage[STORAGE_KEYS.TIME] = 0;
       this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
