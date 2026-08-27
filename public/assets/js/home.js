@@ -107,8 +107,6 @@ document.addEventListener("alpine:init", () => {
     },
 
     isToday(dt) {
-      console.log(dt);
-
       return this.compareDate(dt, new Date());
     },
 
