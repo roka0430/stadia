@@ -192,10 +192,8 @@
 
     <div class="study" x-data="study" x-show="isStudying">
       <div class="study__header">
-        <button class="study__exit" @click="exitStudy()">
-          <span>×</span>
-          中断
-        </button>
+        <button class="study__header-button study__exit" @click="exitStudy()"><span>×</span>終了</button>
+        <button class="study__header-button study__record" @click="recordStudy()">記録</button>
       </div>
       <div class="study__content"></div>
     </div>

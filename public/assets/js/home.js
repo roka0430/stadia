@@ -275,5 +275,9 @@ document.addEventListener("alpine:init", () => {
     exitStudy() {
       this.storage[STORAGE_KEYS.IS_STUDYING] = false;
     },
+
+    recordStudy() {
+      console.log("record");
+    },
   }));
 });
