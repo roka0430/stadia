@@ -44,17 +44,17 @@
         <div class="today__box">
           <div class="today__box-label">今日の学習時間</div>
           <div class="today__box-content">
-            <span>12</span>
+            <span x-text="todayStudyData.hours"></span>
             <span class="unit">時間</span>
-            <span>59</span>
+            <span x-text="todayStudyData.minutes"></span>
             <span class="unit">分</span>
           </div>
         </div>
-        <div class="today__separator"></div>
+        <div class=" today__separator"></div>
         <div class="today__box">
           <div class="today__box-label">今日の学習回数</div>
           <div class="today__box-content">
-            <span>23</span>
+            <span x-text="todayRecords.length"></span>
             <span class="unit">回</span>
           </div>
         </div>

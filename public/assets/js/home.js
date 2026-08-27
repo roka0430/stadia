@@ -6,6 +6,12 @@ const STORAGE_DEFAULT = {
   [STORAGE_KEYS.CURRENT_CATEGORY_ID]: null,
 };
 
+const compareDate = (dt1, dt2) => {
+  return (
+    dt1.getFullYear() === dt2.getFullYear() && dt1.getMonth() === dt2.getMonth() && dt1.getDate() === dt2.getDate()
+  );
+};
+
 document.addEventListener("alpine:init", () => {
   Alpine.data("body", () => ({
     storage: {},
@@ -114,7 +120,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     get totalStudyTime() {
-      return this.records.reduce((sum, { time }) => sum + time, 0);
+      return this.calcTotalStudyTime(this.records);
     },
 
     get subjectStudyTime() {
@@ -137,9 +143,32 @@ document.addEventListener("alpine:init", () => {
       return [...new Set(dates)];
     },
 
+    get todayRecords() {
+      return this.searchRecordsByDate(new Date());
+    },
+
+    get todayStudyData() {
+      const studyTime = this.calcTotalStudyTime(this.todayRecords);
+      return {
+        hours: this.calcHours(studyTime),
+        minutes: this.calcMinutes(studyTime),
+      };
+    },
+
+    calcTotalStudyTime(records) {
+      return records.reduce((sum, { time }) => sum + time, 0);
+    },
+
+    searchRecordsByDate(date) {
+      const dt = new Date(date);
+      dt.setHours(0, 0, 0, 0);
+
+      return this.records.filter((record) => compareDate(new Date(record.date), dt));
+    },
+
     formatStudyTime(seconds) {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
+      const hours = this.calcHours(seconds);
+      const minutes = this.calcMinutes(seconds);
 
       if (hours === 0) {
         return `${minutes}m`;
@@ -150,6 +179,14 @@ document.addEventListener("alpine:init", () => {
       }
 
       return `${hours}h${minutes}m`;
+    },
+
+    calcHours(seconds) {
+      return Math.floor(seconds / 3600);
+    },
+
+    calcMinutes(seconds) {
+      return Math.floor((seconds % 3600) / 60);
     },
 
     calcPercent(numerator, denominator) {
