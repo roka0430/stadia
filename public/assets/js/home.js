@@ -1,11 +1,15 @@
 const STORAGE_KEYS = {
   CURRENT_CATEGORY_ID: "stadia:current_category_id",
   IS_STUDYING: "stadia:is_studying",
+  IS_TIMER_PAUSED: "stadia:is_timer_paused",
+  TIME: "stadia:time",
 };
 
 const STORAGE_DEFAULT = {
   [STORAGE_KEYS.CURRENT_CATEGORY_ID]: null,
   [STORAGE_KEYS.IS_STUDYING]: false,
+  [STORAGE_KEYS.IS_TIMER_PAUSED]: true,
+  [STORAGE_KEYS.TIME]: 0,
 };
 
 document.addEventListener("alpine:init", () => {
@@ -263,15 +267,41 @@ document.addEventListener("alpine:init", () => {
     },
 
     startStudy() {
+      this.storage[STORAGE_KEYS.TIME] = 0;
+      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
       this.storage[STORAGE_KEYS.IS_STUDYING] = true;
     },
   }));
 
   Alpine.data("study", () => ({
-    isPaused: true,
+    timeout: null,
+
+    init() {
+      if (!this.isTimerPaused) {
+        this.tick();
+      }
+    },
 
     get isStudying() {
       return this.storage?.[STORAGE_KEYS.IS_STUDYING];
+    },
+
+    get isTimerPaused() {
+      return this.storage?.[STORAGE_KEYS.IS_TIMER_PAUSED];
+    },
+
+    get time() {
+      return this.storage?.[STORAGE_KEYS.TIME];
+    },
+
+    get formattedTime() {
+      const seconds = this.time ?? 0;
+
+      return {
+        hours: String(Math.floor(seconds / 3600)).padStart(2, "0"),
+        minutes: String(Math.floor((seconds % 3600) / 60)).padStart(2, "0"),
+        seconds: String(seconds % 60).padStart(2, "0"),
+      };
     },
 
     exitStudy() {
@@ -280,6 +310,23 @@ document.addEventListener("alpine:init", () => {
 
     recordStudy() {
       console.log("record");
+    },
+
+    toggleTimer() {
+      if (this.isTimerPaused) {
+        this.tick();
+        this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
+      } else {
+        clearTimeout(this.timeout);
+        this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
+      }
+    },
+
+    tick() {
+      this.timeout = setTimeout(() => {
+        this.storage[STORAGE_KEYS.TIME]++;
+        this.tick();
+      }, 1000);
     },
   }));
 });

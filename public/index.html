@@ -190,16 +190,24 @@
       </section>
     </main>
 
-    <div class="study" x-data="study" x-show="isStudying">
+    <div class="study" x-data="study" x-show="isStudying" x-cloak>
       <div class="study__header">
         <button class="study__header-button study__exit" @click="exitStudy()"><span>×</span>終了</button>
         <button class="study__header-button study__record" @click="recordStudy()">記録</button>
       </div>
       <div class="study__content">
-        <div class="study__timer" :class="{'is-paused': isPaused}">
-          <div class="study__timer-content">59<span>:</span>59<span>:</span>59</div>
+        <div class="study__timer" :class="{'is-paused': isTimerPaused}">
+          <div class="study__timer-content">
+            <span class="time" x-text="formattedTime.hours"></span>
+            <span class="colon">:</span>
+            <span class="time" x-text="formattedTime.minutes"></span>
+          </div>
           <div class="study__timer-indicator"></div>
         </div>
+        <button class="study__start-stop" @click="toggleTimer()">
+          <span x-show="isTimerPaused">start</span>
+          <span x-show="!isTimerPaused">stop</span>
+        </button>
       </div>
     </div>
   </div>

@@ -649,6 +649,8 @@ header {
   padding-bottom: 1px;
 
   border-bottom: solid 1px var(--color-border);
+
+  z-index: 10;
 }
 
 .study__header-button {
@@ -691,6 +693,7 @@ header {
   flex: 1;
 
   display: flex;
+  gap: 30px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -705,12 +708,19 @@ header {
 }
 
 .study__timer-content {
+  display: flex;
+  align-items: center;
   font-size: 10rem;
 }
 
-.study__timer-content span {
+.study__timer-content .time {
+  min-width: 163px;
+  text-align: center;
+}
+
+.study__timer-content .colon {
   position: relative;
-  top: -0.18em;
+  top: -0.08em;
   margin-inline: 0.1em;
   font-size: 0.8em;
 }
@@ -742,10 +752,16 @@ header {
 @keyframes timer-indicator-animation {
   0%,
   10% {
-    transform: translateX(-100%);
+    transform: translateX(-101%);
   }
   90%,
   100% {
-    transform: translateX(100%);
+    transform: translateX(101%);
   }
+}
+
+.study__start-stop {
+  background: none;
+  border: solid 1px var(--color-border);
+  font-size: 2rem;
 }
