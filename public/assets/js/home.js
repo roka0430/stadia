@@ -142,14 +142,14 @@ document.addEventListener("alpine:init", () => {
       const minutes = Math.floor((seconds % 3600) / 60);
 
       if (hours === 0) {
-        return `${minutes}分`;
+        return `${minutes}m`;
       }
 
       if (minutes === 0) {
-        return `${hours}時間`;
+        return `${hours}h`;
       }
 
-      return `${hours}時間${minutes}分`;
+      return `${hours}h${minutes}m`;
     },
 
     calcPercent(numerator, denominator) {

@@ -44,31 +44,52 @@
         <div class="today__box">
           <div class="today__box-label">今日の学習時間</div>
           <div class="today__box-content">
-            <div class="today__data-value">
-              <span>12</span>
-              <span class="unit">時間</span>
-              <span>59</span>
-              <span class="unit">分</span>
-            </div>
-            <div class="today__data-change">+1h12m</div>
+            <span>12</span>
+            <span class="unit">時間</span>
+            <span>59</span>
+            <span class="unit">分</span>
           </div>
         </div>
         <div class="today__separator"></div>
         <div class="today__box">
           <div class="today__box-label">今日の学習回数</div>
           <div class="today__box-content">
-            <div class="today__data-value">
-              <span>23</span>
-              <span class="unit">回</span>
-            </div>
-            <div class="today__data-change">-4回</div>
+            <span>23</span>
+            <span class="unit">回</span>
           </div>
         </div>
       </section>
       <section class="home__section home__statistics">
+        <div class="home__statistics-label">科目別学習時間</div>
         <div class="statistics__subjects">
-          <div class="statistics__subjects-circle"></div>
+          <div class="statistics__subjects-graph">
+            <div class="statistics__subjects-circle"></div>
+            <div class="statistics__subjects-legend">
+              <div>数学aaaaaaaaaaaaaaaaa</div>
+              <div>国語</div>
+              <div>社会</div>
+              <div>その他</div>
+            </div>
+          </div>
+          <div class="statistics__subjects-separator"></div>
+          <div class="statistics__subjects-list">
+            <template x-if="records.length === 0">
+              <div class="statistics__subjects-list-message">
+                科目はありません
+              </div>
+            </template>
+            <template x-for="[name, time] in sortedSubjectStudyTime">
+              <div class="statistics__subjects-list-item">
+                <div x-text="name"></div>
+                <div>
+                  <span x-text="formatStudyTime(time)"></span>
+                  (<span x-text="formatPercent(calcPercent(time, totalStudyTime))">100%</span>)
+                </div>
+              </div>
+            </template>
+          </div>
         </div>
+        <div class="home__statistics-label">過去7日間のデータ</div>
         <div class="statistics__weekly">
           <div class="statistics__weekly-bars">
             <div class="statistics__weekly-bar">
@@ -123,23 +144,6 @@
             <div class="total__card-value"><span x-text="formatStudyTime(records.length ? totalStudyTime / records.length : 0)"></span></div>
           </div>
         </div>
-        <!-- <div class="total__subjects">
-          <div class="total__subjects-label">全科目</div>
-          <template x-if="records.length === 0">
-            <div class="total__no-record-message">
-              科目はありません
-            </div>
-          </template>
-          <template x-for="[name, time] in sortedSubjectStudyTime">
-            <div class="total__subject">
-              <div class="total__subject-name" x-text="name"></div>
-              <div class="total__subject-time">
-                <span x-text="formatStudyTime(time)"></span>
-                ( <span x-text="formatPercent(calcPercent(time, totalStudyTime))">100%</span> )
-              </div>
-            </div>
-          </template>
-        </div> -->
       </section>
       <section class="home__section home__recent">recent</section>
     </main>
