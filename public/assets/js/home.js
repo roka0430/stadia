@@ -305,6 +305,9 @@ document.addEventListener("alpine:init", () => {
     },
 
     exitStudy() {
+      clearTimeout(this.timeout);
+      this.storage[STORAGE_KEYS.TIME] = 0;
+      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
       this.storage[STORAGE_KEYS.IS_STUDYING] = false;
     },
 
@@ -314,15 +317,19 @@ document.addEventListener("alpine:init", () => {
 
     toggleTimer() {
       if (this.isTimerPaused) {
-        this.tick();
         this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
+        this.tick();
       } else {
-        clearTimeout(this.timeout);
         this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
+        clearTimeout(this.timeout);
       }
     },
 
     tick() {
+      if (this.isTimerPaused || !this.isStudying) {
+        return;
+      }
+
       this.timeout = setTimeout(() => {
         this.storage[STORAGE_KEYS.TIME]++;
         this.tick();
