@@ -7,11 +7,13 @@ body {
 }
 
 .wrapper {
+  flex-shrink: 0;
+
   display: flex;
   gap: 20px;
   flex-direction: column;
 
-  width: clamp(900px, 100%, 1100px);
+  width: clamp(800px, 100%, 1100px);
 
   margin-inline: auto;
   padding: 20px;
@@ -150,7 +152,7 @@ header {
   display: grid;
   gap: 20px;
 
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 5fr 4fr;
 }
 
 .home__section {
@@ -238,8 +240,25 @@ header {
 
 .home__statistics {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   flex-direction: column;
+}
+
+.statistics__subjects {
+  display: flex;
+
+  padding: 8px;
+
+  border: solid 1px var(--color-border);
+  border-radius: 8px;
+}
+
+.statistics__subjects-circle {
+  width: 100px;
+  height: 100px;
+
+  background: red;
+  border-radius: 50%;
 }
 
 .statistics__weekly {
@@ -249,7 +268,8 @@ header {
   gap: 5px;
   flex-direction: column;
 
-  padding: 8px;
+  padding-block: 8px;
+  padding-inline: 16px;
 
   border: solid 1px var(--color-border);
   border-radius: 8px;
@@ -270,7 +290,7 @@ header {
 .statistics__weekly-bar {
   position: relative;
 
-  width: 50px;
+  width: 10%;
   height: 100%;
 
   background: var(--color-primary);
