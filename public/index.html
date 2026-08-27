@@ -62,13 +62,45 @@
       <section class="home__section home__statistics">
         <div class="home__statistics-label">科目別学習時間</div>
         <div class="statistics__subjects">
-          <div class="statistics__subjects-graph">
-            <div class="statistics__subjects-circle"></div>
+          <div
+            class="statistics__subjects-graph"
+            x-data="{
+              summarizeSubjectStudyData(n) {
+                const data = this.sortedSubjectStudyData;
+                const top = data.slice(0, n).map(([name, {seconds}]) => ({name, seconds}));
+                const other = data.slice(n).reduce((sum, [, {seconds}]) => sum + seconds, 0);
+                if(other > 0) {
+                  top.push({name: 'その他', seconds: other});
+                }
+                return top;
+              },
+              get summarizedSubjectStudyData() {
+                return this.summarizeSubjectStudyData(4);
+              },
+              get subjectPercentages() {
+                let total = 0;
+                return this.summarizedSubjectStudyData.map(({ seconds }) => {
+                  total += seconds;
+                  return total / this.totalStudyData.seconds * 100;
+                });
+              }
+            }">
+            <div
+              class="statistics__subjects-circle"
+              :style="{
+                '--subject-1': `${subjectPercentages[0] ?? 100}%`,
+                '--subject-2': `${subjectPercentages[1] ?? 100}%`,
+                '--subject-3': `${subjectPercentages[2] ?? 100}%`,
+                '--subject-4': `${subjectPercentages[3] ?? 100}%`,
+                '--subject-5': `${subjectPercentages[4] ?? 100}%`
+              }">
+            </div>
             <div class="statistics__subjects-legend">
-              <div>数学aaaaaaaaaaaaaaaaa</div>
-              <div>国語</div>
-              <div>社会</div>
-              <div>その他</div>
+              <div x-show="subjectPercentages[0]" x-text="summarizedSubjectStudyData?.[0]?.name"></div>
+              <div x-show="subjectPercentages[1]" x-text="summarizedSubjectStudyData?.[1]?.name"></div>
+              <div x-show="subjectPercentages[2]" x-text="summarizedSubjectStudyData?.[2]?.name"></div>
+              <div x-show="subjectPercentages[3]" x-text="summarizedSubjectStudyData?.[3]?.name"></div>
+              <div x-show="subjectPercentages[4]" x-text="summarizedSubjectStudyData?.[4]?.name"></div>
             </div>
           </div>
           <div class="statistics__subjects-separator"></div>

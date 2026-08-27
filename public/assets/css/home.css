@@ -243,10 +243,11 @@ header {
 }
 
 .statistics__subjects {
-  --color-subject-1: red;
-  --color-subject-2: green;
-  --color-subject-3: blue;
-  --color-subject-4: gray;
+  --color-subject-1: #2fbf9f;
+  --color-subject-2: #5c8fe8;
+  --color-subject-3: #e0a13b;
+  --color-subject-4: #d05c82;
+  --color-subject-5: #606060;
 
   display: grid;
   gap: 16px;
@@ -277,10 +278,11 @@ header {
   height: 110px;
 
   background: conic-gradient(
-    var(--color-subject-1) 0% 40%,
-    var(--color-subject-2) 40% 75%,
-    var(--color-subject-3) 75% 80%,
-    var(--color-subject-4) 80% 100%
+    var(--color-subject-1) 0% var(--subject-1),
+    var(--color-subject-2) var(--subject-1) var(--subject-2),
+    var(--color-subject-3) var(--subject-2) var(--subject-3),
+    var(--color-subject-4) var(--subject-3) var(--subject-4),
+    var(--color-subject-5) var(--subject-4) var(--subject-5)
   );
   border-radius: 50%;
 }
@@ -289,6 +291,7 @@ header {
   display: flex;
   flex-direction: column;
 
+  width: 100%;
   min-width: 0;
 
   font-size: 0.9rem;
@@ -341,6 +344,9 @@ header {
 }
 .statistics__subjects-legend div:nth-of-type(4)::before {
   background: var(--color-subject-4);
+}
+.statistics__subjects-legend div:nth-of-type(5)::before {
+  background: var(--color-subject-5);
 }
 
 .statistics__subjects-list {
