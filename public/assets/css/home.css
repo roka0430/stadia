@@ -237,18 +237,25 @@ header {
 /* weekly */
 
 .home__weekly {
-  padding-block: 24px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
 }
 
 .weekly__graph {
+  flex: 1;
+
   display: flex;
   gap: 5px;
   flex-direction: column;
 
-  height: 100%;
+  padding: 8px;
+
+  border: solid 1px var(--color-border);
+  border-radius: 8px;
 }
 
-.weekly__bars {
+.weekly__graph-bars {
   flex: 1;
 
   display: flex;
@@ -260,7 +267,7 @@ header {
   border-bottom: solid 1px var(--color-border);
 }
 
-.weekly__bar {
+.weekly__graph-bar {
   position: relative;
 
   width: 50px;
@@ -269,7 +276,7 @@ header {
   background: var(--color-primary);
 }
 
-.weekly__bar-value {
+.weekly__graph-value {
   position: absolute;
   bottom: calc(100% + 4px);
   left: 50%;
@@ -278,12 +285,12 @@ header {
   font-size: 0.85rem;
 }
 
-.weekly__labels {
+.weekly__graph-labels {
   display: flex;
   justify-content: space-around;
 }
 
-.weekly__label {
+.weekly__graph-label {
   font-size: 0.9rem;
 }
 
