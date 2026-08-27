@@ -400,11 +400,10 @@ header {
   flex: 1;
 
   display: flex;
-  gap: 5px;
+  gap: 2px;
   flex-direction: column;
 
-  padding-block: 8px;
-  padding-inline: 16px;
+  padding: 16px;
 
   border: solid 1px var(--color-border);
   border-radius: 8px;
@@ -426,7 +425,8 @@ header {
   position: relative;
 
   width: 10%;
-  height: 100%;
+  height: var(--height);
+  min-height: 2px;
 
   background: var(--color-primary);
 }

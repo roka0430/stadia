@@ -46,8 +46,8 @@
           <div class="today__box-content">
             <span x-show="todayStudyData.hours !== 0" x-text="todayStudyData.hours"></span>
             <span x-show="todayStudyData.hours !== 0" class="unit">時間</span>
-            <span x-show="todayStudyData.minutes !== 0" x-text="todayStudyData.minutes"></span>
-            <span x-show="todayStudyData.minutes !== 0" class="unit">分</span>
+            <span x-show="todayStudyData.hours === 0 || todayStudyData.minutes !== 0" x-text="todayStudyData.minutes"></span>
+            <span x-show="todayStudyData.hours === 0 || todayStudyData.minutes !== 0" class="unit">分</span>
           </div>
         </div>
         <div class=" today__separator"></div>
@@ -90,38 +90,36 @@
           </div>
         </div>
         <div class="home__statistics-label">過去7日間のデータ</div>
-        <div class="statistics__weekly">
+        <div
+          class="statistics__weekly"
+          x-data="{
+            get records() {
+              return getStudyDataByPastDays(7).toReversed();
+            },
+            get maxSeconds() {
+              return Math.max(...this.records.map(({ data }) => data.seconds));;
+            }
+          }">
           <div class="statistics__weekly-bars">
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
-            <div class="statistics__weekly-bar">
-              <div class="statistics__weekly-value">12.2h</div>
-            </div>
+            <template x-for="record in records">
+              <div class="statistics__weekly-bar" :style="`--height: ${maxSeconds ? record.data.seconds / maxSeconds * 100 : 0}%;`">
+                <div class="statistics__weekly-value" x-text="record.data.string"></div>
+              </div>
+            </template>
           </div>
           <div class="statistics__weekly-labels">
-            <div class="statistics__weekly-label">20日</div>
-            <div class="statistics__weekly-label">21日</div>
-            <div class="statistics__weekly-label">22日</div>
-            <div class="statistics__weekly-label">23日</div>
-            <div class="statistics__weekly-label">24日</div>
-            <div class="statistics__weekly-label">25日</div>
-            <div class="statistics__weekly-label">今日</div>
+            <template x-for="record in records">
+              <div class="statistics__weekly-label">
+                <template x-if="isToday(record.date)">
+                  <span>今日</span>
+                </template>
+                <template x-if="!isToday(record.date)">
+                  <span>
+                    <span x-text="record.date.getMonth() + 1"></span>/<span x-text="record.date.getDate()"></span>
+                  </span>
+                </template>
+              </div>
+            </template>
           </div>
         </div>
       </section>

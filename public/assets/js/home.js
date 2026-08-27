@@ -6,12 +6,6 @@ const STORAGE_DEFAULT = {
   [STORAGE_KEYS.CURRENT_CATEGORY_ID]: null,
 };
 
-const compareDate = (dt1, dt2) => {
-  return (
-    dt1.getFullYear() === dt2.getFullYear() && dt1.getMonth() === dt2.getMonth() && dt1.getDate() === dt2.getDate()
-  );
-};
-
 document.addEventListener("alpine:init", () => {
   Alpine.data("body", () => ({
     storage: {},
@@ -106,6 +100,18 @@ document.addEventListener("alpine:init", () => {
   }));
 
   Alpine.data("home", () => ({
+    compareDate(dt1, dt2) {
+      return (
+        dt1.getFullYear() === dt2.getFullYear() && dt1.getMonth() === dt2.getMonth() && dt1.getDate() === dt2.getDate()
+      );
+    },
+
+    isToday(dt) {
+      console.log(dt);
+
+      return this.compareDate(dt, new Date());
+    },
+
     get records() {
       if (this.currentCategory === null) {
         return [];
@@ -116,6 +122,13 @@ document.addEventListener("alpine:init", () => {
 
     get todayRecords() {
       return this.searchRecordsByDate(new Date());
+    },
+
+    searchRecordsByDate(date) {
+      const dt = new Date(date);
+      dt.setHours(0, 0, 0, 0);
+
+      return this.records.filter((record) => this.compareDate(new Date(record.date), dt));
     },
 
     get subjectNames() {
@@ -160,6 +173,14 @@ document.addEventListener("alpine:init", () => {
       return `${hours}h${minutes}m`;
     },
 
+    calcPercent(numerator, denominator) {
+      return denominator === 0 ? this.formatPercent(0) : this.formatPercent(numerator / denominator);
+    },
+
+    formatPercent(value) {
+      return `${(value * 100).toFixed(1)}%`;
+    },
+
     get subjectStudyTime() {
       const studyTimes = {};
 
@@ -180,19 +201,30 @@ document.addEventListener("alpine:init", () => {
       return [...new Set(dates)];
     },
 
-    searchRecordsByDate(date) {
-      const dt = new Date(date);
-      dt.setHours(0, 0, 0, 0);
+    getRecordsByPastDays(days) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-      return this.records.filter((record) => compareDate(new Date(record.date), dt));
+      return Array.from({ length: days }, (_, i) => {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+
+        return {
+          date,
+          records: this.searchRecordsByDate(date),
+        };
+      });
     },
 
-    calcPercent(numerator, denominator) {
-      return denominator === 0 ? this.formatPercent(0) : this.formatPercent(numerator / denominator);
-    },
+    getStudyDataByPastDays(days) {
+      const records = this.getRecordsByPastDays(days);
 
-    formatPercent(value) {
-      return `${(value * 100).toFixed(1)}%`;
+      for (const record of records) {
+        record.data = this.calcTotalStudyData(record.records);
+        delete record.records;
+      }
+
+      return records;
     },
   }));
 });
