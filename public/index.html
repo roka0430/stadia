@@ -192,7 +192,10 @@
 
     <div class="study" x-data="study" x-show="isStudying">
       <div class="study__header">
-        <button class="study__exit" @click="exitStudy()" title="中断する">×</button>
+        <button class="study__exit" @click="exitStudy()">
+          <span>×</span>
+          中断
+        </button>
       </div>
       <div class="study__content"></div>
     </div>
