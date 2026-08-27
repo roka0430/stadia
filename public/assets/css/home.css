@@ -350,6 +350,11 @@ header {
   flex-direction: column;
 
   position: relative;
+
+  max-height: 110px;
+
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .statistics__subjects-list-message {

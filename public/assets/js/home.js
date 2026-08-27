@@ -124,21 +124,21 @@ document.addEventListener("alpine:init", () => {
     },
 
     get todayStudyData() {
-      return this.calcTotalStudyTime(this.todayRecords);
+      return this.calcTotalStudyData(this.todayRecords);
     },
 
-    get totalStudyTime() {
-      return this.calcTotalStudyTime(this.records);
+    get totalStudyData() {
+      return this.calcTotalStudyData(this.records);
     },
 
-    calcTotalStudyTime(records) {
+    calcTotalStudyData(records) {
       const seconds = records.reduce((sum, { time }) => sum + time, 0);
-      return this.calcStudyTime(seconds);
+      return this.calcStudyData(seconds);
     },
 
-    calcStudyTime(seconds) {
-      const minutes = this.calcMinutes(seconds);
-      const hours = this.calcHours(seconds);
+    calcStudyData(seconds) {
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const hours = Math.floor(seconds / 3600);
 
       return {
         seconds: seconds,
@@ -146,14 +146,6 @@ document.addEventListener("alpine:init", () => {
         hours: hours,
         string: this.formatStudyTime(hours, minutes),
       };
-    },
-
-    calcMinutes(seconds) {
-      return Math.floor((seconds % 3600) / 60);
-    },
-
-    calcHours(seconds) {
-      return Math.floor(seconds / 3600);
     },
 
     formatStudyTime(hours, minutes) {

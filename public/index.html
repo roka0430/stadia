@@ -82,8 +82,8 @@
               <div class="statistics__subjects-list-item">
                 <div x-text="name"></div>
                 <div>
-                  <span x-text="calcStudyTime(time).string"></span>
-                  (<span x-text="calcPercent(time, totalStudyTime.seconds)">100%</span>)
+                  <span x-text="calcStudyData(time).string"></span>
+                  (<span x-text="calcPercent(time, totalStudyData.seconds)">100%</span>)
                 </div>
               </div>
             </template>
@@ -129,7 +129,7 @@
         <div class="total__cards">
           <div class="total__card">
             <div class="total__card-label">総学習時間</div>
-            <div class="total__card-value" x-text="totalStudyTime.string"></div>
+            <div class="total__card-value" x-text="totalStudyData.string"></div>
           </div>
           <div class="total__card">
             <div class="total__card-label">総学習回数</div>
@@ -141,7 +141,7 @@
           </div>
           <div class="total__card">
             <div class="total__card-label">平均学習時間</div>
-            <div class="total__card-value"><span x-text="calcStudyTime(records.length ? totalStudyTime.seconds / records.length : 0).string"></span></div>
+            <div class="total__card-value"><span x-text="calcStudyData(records.length ? totalStudyData.seconds / records.length : 0).string"></span></div>
           </div>
         </div>
       </section>
