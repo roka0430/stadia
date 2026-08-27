@@ -114,13 +114,58 @@ document.addEventListener("alpine:init", () => {
       return this.currentCategory.records;
     },
 
+    get todayRecords() {
+      return this.searchRecordsByDate(new Date());
+    },
+
     get subjectNames() {
       const names = this.records.map(({ name }) => name);
       return [...new Set(names)];
     },
 
+    get todayStudyData() {
+      return this.calcTotalStudyTime(this.todayRecords);
+    },
+
     get totalStudyTime() {
       return this.calcTotalStudyTime(this.records);
+    },
+
+    calcTotalStudyTime(records) {
+      const seconds = records.reduce((sum, { time }) => sum + time, 0);
+      return this.calcStudyTime(seconds);
+    },
+
+    calcStudyTime(seconds) {
+      const minutes = this.calcMinutes(seconds);
+      const hours = this.calcHours(seconds);
+
+      return {
+        seconds: seconds,
+        minutes: minutes,
+        hours: hours,
+        string: this.formatStudyTime(hours, minutes),
+      };
+    },
+
+    calcMinutes(seconds) {
+      return Math.floor((seconds % 3600) / 60);
+    },
+
+    calcHours(seconds) {
+      return Math.floor(seconds / 3600);
+    },
+
+    formatStudyTime(hours, minutes) {
+      if (hours === 0) {
+        return `${minutes}m`;
+      }
+
+      if (minutes === 0) {
+        return `${hours}h`;
+      }
+
+      return `${hours}h${minutes}m`;
     },
 
     get subjectStudyTime() {
@@ -143,22 +188,6 @@ document.addEventListener("alpine:init", () => {
       return [...new Set(dates)];
     },
 
-    get todayRecords() {
-      return this.searchRecordsByDate(new Date());
-    },
-
-    get todayStudyData() {
-      const studyTime = this.calcTotalStudyTime(this.todayRecords);
-      return {
-        hours: this.calcHours(studyTime),
-        minutes: this.calcMinutes(studyTime),
-      };
-    },
-
-    calcTotalStudyTime(records) {
-      return records.reduce((sum, { time }) => sum + time, 0);
-    },
-
     searchRecordsByDate(date) {
       const dt = new Date(date);
       dt.setHours(0, 0, 0, 0);
@@ -166,35 +195,8 @@ document.addEventListener("alpine:init", () => {
       return this.records.filter((record) => compareDate(new Date(record.date), dt));
     },
 
-    formatStudyTime(seconds) {
-      const hours = this.calcHours(seconds);
-      const minutes = this.calcMinutes(seconds);
-
-      if (hours === 0) {
-        return `${minutes}m`;
-      }
-
-      if (minutes === 0) {
-        return `${hours}h`;
-      }
-
-      return `${hours}h${minutes}m`;
-    },
-
-    calcHours(seconds) {
-      return Math.floor(seconds / 3600);
-    },
-
-    calcMinutes(seconds) {
-      return Math.floor((seconds % 3600) / 60);
-    },
-
     calcPercent(numerator, denominator) {
-      if (denominator === 0) {
-        return 0;
-      }
-
-      return numerator / denominator;
+      return denominator === 0 ? this.formatPercent(0) : this.formatPercent(numerator / denominator);
     },
 
     formatPercent(value) {

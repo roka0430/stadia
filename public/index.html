@@ -44,10 +44,10 @@
         <div class="today__box">
           <div class="today__box-label">今日の学習時間</div>
           <div class="today__box-content">
-            <span x-text="todayStudyData.hours"></span>
-            <span class="unit">時間</span>
-            <span x-text="todayStudyData.minutes"></span>
-            <span class="unit">分</span>
+            <span x-show="todayStudyData.hours !== 0" x-text="todayStudyData.hours"></span>
+            <span x-show="todayStudyData.hours !== 0" class="unit">時間</span>
+            <span x-show="todayStudyData.minutes !== 0" x-text="todayStudyData.minutes"></span>
+            <span x-show="todayStudyData.minutes !== 0" class="unit">分</span>
           </div>
         </div>
         <div class=" today__separator"></div>
@@ -82,8 +82,8 @@
               <div class="statistics__subjects-list-item">
                 <div x-text="name"></div>
                 <div>
-                  <span x-text="formatStudyTime(time)"></span>
-                  (<span x-text="formatPercent(calcPercent(time, totalStudyTime))">100%</span>)
+                  <span x-text="calcStudyTime(time).string"></span>
+                  (<span x-text="calcPercent(time, totalStudyTime.seconds)">100%</span>)
                 </div>
               </div>
             </template>
@@ -129,7 +129,7 @@
         <div class="total__cards">
           <div class="total__card">
             <div class="total__card-label">総学習時間</div>
-            <div class="total__card-value" x-text="formatStudyTime(totalStudyTime)">128時間42分</div>
+            <div class="total__card-value" x-text="totalStudyTime.string"></div>
           </div>
           <div class="total__card">
             <div class="total__card-label">総学習回数</div>
@@ -141,7 +141,7 @@
           </div>
           <div class="total__card">
             <div class="total__card-label">平均学習時間</div>
-            <div class="total__card-value"><span x-text="formatStudyTime(records.length ? totalStudyTime / records.length : 0)"></span></div>
+            <div class="total__card-value"><span x-text="calcStudyTime(records.length ? totalStudyTime.seconds / records.length : 0).string"></span></div>
           </div>
         </div>
       </section>
