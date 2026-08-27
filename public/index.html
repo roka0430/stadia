@@ -108,7 +108,7 @@
           <div class="statistics__subjects-list">
             <template x-if="records.length === 0">
               <div class="statistics__subjects-list-message">
-                科目はありません
+                科目がありません
               </div>
             </template>
             <template x-for="[name, data] in sortedSubjectStudyData">
@@ -147,9 +147,7 @@
                   <span>今日</span>
                 </template>
                 <template x-if="!isToday(record.date)">
-                  <span>
-                    <span x-text="record.date.getMonth() + 1"></span>/<span x-text="record.date.getDate()"></span>
-                  </span>
+                  <span x-text="formatDate(record.date, 'M/DD')"></span>
                 </template>
               </div>
             </template>
@@ -176,9 +174,24 @@
           </div>
         </div>
       </section>
-      <section class="home__section home__recent">recent</section>
+      <section class="home__section home__records">
+        <div class="records__label">過去の記録</div>
+        <div class="records__list">
+          <template x-if="records.length === 0">
+            <div class="records__no-record-message">記録がありません</div>
+          </template>
+          <template x-for="record in records">
+            <div class="records__item">
+              <span x-text="formatDate(record.date, 'YY-MM-DD HH:mm')"></span>
+              <span x-text="record.name"></span>
+              <span x-text="calcStudyData(record.time).string"></span>
+            </div>
+          </template>
+        </div>
+      </section>
     </main>
   </div>
+
 
 
   <script src="assets/js/home.js" defer></script>

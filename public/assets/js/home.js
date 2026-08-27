@@ -27,6 +27,7 @@ document.addEventListener("alpine:init", () => {
       }
 
       await this.initCurrentCategory();
+      this.sortRecords();
     },
 
     loadLocalStorage() {
@@ -86,6 +87,10 @@ document.addEventListener("alpine:init", () => {
       }
 
       this.currentCategory = await this.loadCategory(categoryId);
+    },
+
+    sortRecords() {
+      this.currentCategory.records.sort((a, b) => new Date(b.date) - new Date(a.date));
     },
   }));
 
@@ -227,6 +232,32 @@ document.addEventListener("alpine:init", () => {
     get studyDates() {
       const dates = this.records.map(({ date }) => date);
       return [...new Set(dates)];
+    },
+
+    formatDate(date, format) {
+      const dt = new Date(date);
+
+      const values = {
+        YYYY: dt.getFullYear(),
+        YY: String(dt.getFullYear()).slice(-2),
+
+        MM: String(dt.getMonth() + 1).padStart(2, "0"),
+        M: dt.getMonth() + 1,
+
+        DD: String(dt.getDate()).padStart(2, "0"),
+        D: dt.getDate(),
+
+        HH: String(dt.getHours()).padStart(2, "0"),
+        H: dt.getHours(),
+
+        mm: String(dt.getMinutes()).padStart(2, "0"),
+        m: dt.getMinutes(),
+
+        ss: String(dt.getSeconds()).padStart(2, "0"),
+        s: dt.getSeconds(),
+      };
+
+      return format.replace(/YYYY|YY|MM|M|DD|D|HH|H|mm|m|ss|s/g, (token) => values[token]);
     },
   }));
 });
