@@ -277,6 +277,10 @@ document.addEventListener("alpine:init", () => {
     timeout: null,
 
     init() {
+      if (this.isStudying && this.isTimerPaused && this.time === 0) {
+        this.timerReset();
+      }
+
       if (!this.isTimerPaused) {
         this.tick();
       }
@@ -292,6 +296,18 @@ document.addEventListener("alpine:init", () => {
 
     get time() {
       return this.storage?.[STORAGE_KEYS.TIME];
+    },
+
+    set isStudying(isStudying) {
+      this.storage[STORAGE_KEYS.IS_STUDYING] = isStudying;
+    },
+
+    set isTimerPaused(isTimerPaused) {
+      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = isTimerPaused;
+    },
+
+    set time(time) {
+      this.storage[STORAGE_KEYS.TIME] = time;
     },
 
     get formattedTime() {
@@ -310,11 +326,13 @@ document.addEventListener("alpine:init", () => {
           return;
         }
       }
+    },
 
+    timerReset() {
       clearTimeout(this.timeout);
-      this.storage[STORAGE_KEYS.TIME] = 0;
-      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
-      this.storage[STORAGE_KEYS.IS_STUDYING] = false;
+      this.time = 0;
+      this.isTimerPaused = true;
+      this.isStudying = false;
     },
 
     recordStudy() {
@@ -323,10 +341,10 @@ document.addEventListener("alpine:init", () => {
 
     toggleTimer() {
       if (this.isTimerPaused) {
-        this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
+        this.isTimerPaused = false;
         this.tick();
       } else {
-        this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
+        this.isTimerPaused = true;
         clearTimeout(this.timeout);
       }
     },
@@ -337,7 +355,7 @@ document.addEventListener("alpine:init", () => {
       }
 
       this.timeout = setTimeout(() => {
-        this.storage[STORAGE_KEYS.TIME]++;
+        this.time++;
         this.tick();
       }, 1000);
     },
