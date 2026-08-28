@@ -230,10 +230,25 @@
           <div class="popup__title" x-text="title"></div>
           <button class="popup__exit" @click="cancel()">×</button>
         </div>
-        <div class="popup__contents" x-ref="popupContents">
+        <div class="popup__contents" x-ref="popupContents" @input="input()">
           <template x-if="context === 'exit-study'">
-            <div class="popup__content" data-content="exit-study" @input="input()">
+            <div class="popup__content" data-content="exit-study">
               <p>学習記録を破棄して終了しますか？</p>
+            </div>
+          </template>
+          <template x-if="context === 'record-study'">
+            <div class="popup__content" data-content="record-study">
+              <p>科目を選択してください。</p>
+              <select name="" id="">
+                <template x-for="name in subjectNames">
+                  <option x-text="name"></option>
+                </template>
+              </select>
+            </div>
+          </template>
+          <template x-if="context === 'study-too-short'">
+            <div class="popup__content" data-content="study-too-short">
+              <p>学習時間が1分未満のため、記録できません。</p>
             </div>
           </template>
         </div>

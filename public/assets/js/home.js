@@ -43,6 +43,13 @@ document.addEventListener("alpine:init", () => {
         type: "success",
         validate: null,
       });
+
+      Popup.register("study-too-short", {
+        title: "記録できません",
+        confirm: "OK",
+        type: "success",
+        validate: null,
+      });
     },
 
     initStorage() {
@@ -127,6 +134,19 @@ document.addEventListener("alpine:init", () => {
     sortRecords() {
       this.currentCategory.records.sort((a, b) => new Date(b.date) - new Date(a.date));
     },
+
+    get records() {
+      if (this.currentCategory === null) {
+        return [];
+      }
+
+      return this.currentCategory.records;
+    },
+
+    get subjectNames() {
+      const names = this.records.map(({ name }) => name);
+      return [...new Set(names)];
+    },
   }));
 
   Alpine.data("category", () => ({
@@ -150,14 +170,6 @@ document.addEventListener("alpine:init", () => {
       return this.compareDate(dt, new Date());
     },
 
-    get records() {
-      if (this.currentCategory === null) {
-        return [];
-      }
-
-      return this.currentCategory.records;
-    },
-
     get todayRecords() {
       return this.searchRecordsByDate(new Date());
     },
@@ -167,11 +179,6 @@ document.addEventListener("alpine:init", () => {
       dt.setHours(0, 0, 0, 0);
 
       return this.records.filter((record) => this.compareDate(new Date(record.date), dt));
-    },
-
-    get subjectNames() {
-      const names = this.records.map(({ name }) => name);
-      return [...new Set(names)];
     },
 
     get todayStudyData() {
@@ -373,7 +380,17 @@ document.addEventListener("alpine:init", () => {
       this.isStudying = false;
     },
 
-    recordStudy() {
+    async recordStudy() {
+      if (this.time < 60) {
+        await Popup.open("study-too-short");
+        return;
+      }
+
+      const res = await Popup.open("record-study");
+      if (!res.action) {
+        return;
+      }
+
       console.log("record");
     },
 
