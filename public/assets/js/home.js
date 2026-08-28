@@ -297,7 +297,7 @@ document.addEventListener("alpine:init", () => {
 
     startStudy() {
       this.storage[STORAGE_KEYS.TIME] = 0;
-      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = true;
+      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
       this.storage[STORAGE_KEYS.IS_STUDYING] = true;
     },
   }));
@@ -313,6 +313,12 @@ document.addEventListener("alpine:init", () => {
       if (!this.isTimerPaused) {
         this.tick();
       }
+
+      this.$watch("isTimerPaused", () => {
+        if (!this.isTimerPaused && this.isStudying) {
+          this.tick();
+        }
+      });
     },
 
     get isStudying() {
@@ -372,11 +378,9 @@ document.addEventListener("alpine:init", () => {
     },
 
     toggleTimer() {
+      this.isTimerPaused = !this.isTimerPaused;
+
       if (this.isTimerPaused) {
-        this.isTimerPaused = false;
-        this.tick();
-      } else {
-        this.isTimerPaused = true;
         clearTimeout(this.timeout);
       }
     },
