@@ -34,14 +34,14 @@ document.addEventListener("alpine:init", () => {
         title: "学習を終了する",
         confirm: "終了",
         type: "danger",
-        validate: (content) => content.querySelector("input").value === "aa",
+        validate: null,
       });
 
       Popup.register("record-study", {
         title: "学習を記録する",
         confirm: "記録",
         type: "success",
-        validate: () => null,
+        validate: null,
       });
     },
 
@@ -352,8 +352,9 @@ document.addEventListener("alpine:init", () => {
     async exitStudy() {
       if (this.time > 0) {
         const res = await Popup.open("exit-study");
-        console.log(res);
-        return;
+        if (!res.action) {
+          return;
+        }
       }
 
       this.timerReset();
