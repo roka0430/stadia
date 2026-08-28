@@ -326,6 +326,8 @@ document.addEventListener("alpine:init", () => {
           return;
         }
       }
+
+      this.timerReset();
     },
 
     timerReset() {

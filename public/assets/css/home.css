@@ -693,7 +693,7 @@ header {
   flex: 1;
 
   display: flex;
-  gap: 30px;
+  gap: 80px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -761,7 +761,24 @@ header {
 }
 
 .study__start-stop {
+  padding-block: 8px;
+  padding-inline: 23px 24px;
+
   background: none;
   border: solid 1px var(--color-border);
-  font-size: 2rem;
+  border-radius: 5px;
+
+  font-size: 1.2rem;
+
+  cursor: pointer;
+}
+
+.study__start-stop-content {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.study__start-stop-content span {
+  transform: translateY(-1px);
 }
