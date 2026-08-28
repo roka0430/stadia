@@ -2,7 +2,9 @@ import Popup from "./Popup.js";
 
 export default () => ({
   context: null,
+  title: "",
   confirm: "",
+  type: "",
   validate: null,
   disable: true,
 
@@ -13,7 +15,9 @@ export default () => ({
   init() {
     document.addEventListener("popup-changed", () => {
       this.context = Popup.context;
+      this.title = Popup.popup.title;
       this.confirm = Popup.popup.confirm;
+      this.type = Popup.popup.type;
       this.validate = Popup.popup.validate;
       this.disable = this.validate === null ? false : true;
     });

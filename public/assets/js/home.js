@@ -31,12 +31,16 @@ document.addEventListener("alpine:init", () => {
 
     initPopup() {
       Popup.register("exit-study", {
+        title: "学習を終了する",
         confirm: "終了",
+        type: "danger",
         validate: (content) => content.querySelector("input").value === "aa",
       });
 
       Popup.register("record-study", {
+        title: "学習を記録する",
         confirm: "記録",
+        type: "success",
         validate: () => null,
       });
     },

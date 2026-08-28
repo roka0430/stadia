@@ -225,17 +225,19 @@
     </div>
 
     <div class="popup" x-data="popup" x-show="context !== null" x-cloak>
-
-      <div @input="input()">
-        <div class="popup__content" data-content="exit-study" x-show="context === $el.dataset.content">
-          exit study
-          <input type="text">
+      <div class="popup__body" @click.outside="cancel()">
+        <div class="popup__header">
+          <div class="popup__title" x-text="title"></div>
+          <button class="popup__exit" @click="cancel()">×</button>
         </div>
-      </div>
-
-      <div>
-        <button @click="cancel()">キャンセル</button>
-        <button x-text="confirm" :disabled="disable" @click="action()"></button>
+        <div class="popup__content" data-content="exit-study" x-show="context === $el.dataset.content" @input="input()">
+          <div>exit study</div>
+          <input class="popup__input" type="text">
+        </div>
+        <div class="popup__controls">
+          <button class="popup__cancel" @click="cancel()">キャンセル</button>
+          <button class="popup__action" x-text="confirm" :disabled="disable" :data-type="type" @click="action()"></button>
+        </div>
       </div>
     </div>
   </div>

@@ -9,8 +9,8 @@ class Popup {
     return this.popups[this.context] ?? {};
   }
 
-  register(context, { confirm, validate }) {
-    this.popups[context] = { confirm, validate };
+  register(context, { title, confirm, type, validate }) {
+    this.popups[context] = { title, confirm, type, validate };
   }
 
   open(context) {
