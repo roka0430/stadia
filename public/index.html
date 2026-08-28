@@ -224,7 +224,7 @@
       </div>
     </div>
 
-    <div class="popup" x-data="popup" x-show="context !== null" x-cloak>
+    <div class="popup" x-data="popup" x-show="context !== null" x-cloak @keydown.window.escape="if(context !== null) cancel()">
       <div class="popup__body" @click.outside="cancel()">
         <div class="popup__header">
           <div class="popup__title" x-text="title"></div>
