@@ -52,3 +52,7 @@ textarea {
   color: var(--color-text);
   font-family: "ZenKakuGothicNew", sans-serif;
 }
+
+[x-cloak] {
+  display: none !important;
+}
