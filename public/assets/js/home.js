@@ -1,3 +1,6 @@
+import Popup from "./popup/Popup.js";
+import AlpinePopup from "./popup/AlpinePopup.js";
+
 const STORAGE_KEYS = {
   CURRENT_CATEGORY_ID: "stadia:current_category_id",
   IS_STUDYING: "stadia:is_studying",
@@ -13,6 +16,8 @@ const STORAGE_DEFAULT = {
 };
 
 document.addEventListener("alpine:init", () => {
+  Alpine.data("popup", AlpinePopup);
+
   Alpine.data("body", () => ({
     storage: {},
     categories: [],
