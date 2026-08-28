@@ -751,6 +751,12 @@ header {
   outline: none;
 }
 
+.popup__dropdown {
+  width: 100%;
+  height: 35px;
+  background: var(--color-bg);
+}
+
 .popup__controls {
   display: flex;
   gap: 10px;
