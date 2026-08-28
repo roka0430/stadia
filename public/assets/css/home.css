@@ -787,3 +787,19 @@ header {
 .study__start-stop-content span {
   transform: translateY(-1px);
 }
+
+/*------------------------------ popup ------------------------------*/
+
+.popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--color-bg);
+}
+
+.popup button {
+  background: none;
+  border: solid 1px var(--color-border);
+}

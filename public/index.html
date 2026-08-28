@@ -224,7 +224,20 @@
       </div>
     </div>
 
-    <div class="popup" x-data="popup"></div>
+    <div class="popup" x-data="popup" x-show="context !== null" x-cloak>
+
+      <div @input="input()">
+        <div class="popup__content" data-content="exit-study" x-show="context === $el.dataset.content">
+          exit study
+          <input type="text">
+        </div>
+      </div>
+
+      <div>
+        <button @click="cancel()">キャンセル</button>
+        <button x-text="confirm" :disabled="disable" @click="action()"></button>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="assets/js/home.js" defer></script>

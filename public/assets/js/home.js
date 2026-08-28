@@ -24,12 +24,32 @@ document.addEventListener("alpine:init", () => {
     currentCategory: null,
 
     async init() {
+      this.initPopup();
+      this.initStorage();
+      await this.initCategory();
+    },
+
+    initPopup() {
+      Popup.register("exit-study", {
+        confirm: "終了",
+        validate: (content) => content.querySelector("input").value === "aa",
+      });
+
+      Popup.register("record-study", {
+        confirm: "記録",
+        validate: () => null,
+      });
+    },
+
+    initStorage() {
       this.storage = this.loadLocalStorage();
 
       this.$watch("storage", () => {
         this.saveLocalStorage(this.storage);
       });
+    },
 
+    async initCategory() {
       this.categories = await this.loadCategories();
 
       if (this.categories.length === 0) {
@@ -325,11 +345,11 @@ document.addEventListener("alpine:init", () => {
       };
     },
 
-    exitStudy() {
+    async exitStudy() {
       if (this.time > 0) {
-        if (!confirm("終了すると内容は失われます。よろしいですか？")) {
-          return;
-        }
+        const res = await Popup.open("exit-study");
+        console.log(res);
+        return;
       }
 
       this.timerReset();
