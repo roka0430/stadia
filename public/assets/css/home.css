@@ -764,13 +764,18 @@ header {
   padding-block: 8px;
   padding-inline: 23px 24px;
 
-  background: none;
-  border: solid 1px var(--color-border);
+  background: var(--color-danger);
+  border: none;
   border-radius: 5px;
 
   font-size: 1.2rem;
 
   cursor: pointer;
+  transition: all 0.1s;
+}
+
+.study__start-stop.is-paused {
+  background: var(--color-success);
 }
 
 .study__start-stop-content {
