@@ -842,12 +842,14 @@ header {
   color: var(--color-text);
 }
 
+.popup__contents {
+  padding: 16px;
+}
+
 .popup__content {
   display: flex;
   gap: 6px;
   flex-direction: column;
-
-  padding: 16px;
 }
 
 .popup__input {

@@ -9,7 +9,7 @@ export default () => ({
   disable: true,
 
   get content() {
-    return document.querySelector(`.popup__content[data-content="${this.context}"]`);
+    return this.$refs.popupContents.querySelector(`.popup__content[data-content="${this.context}"]`);
   },
 
   init() {

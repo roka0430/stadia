@@ -230,9 +230,11 @@
           <div class="popup__title" x-text="title"></div>
           <button class="popup__exit" @click="cancel()">×</button>
         </div>
-        <div class="popup__content" data-content="exit-study" x-show="context === $el.dataset.content" @input="input()">
-          <div>exit study</div>
-          <input class="popup__input" type="text">
+        <div class="popup__contents" x-ref="popupContents">
+          <div class="popup__content" data-content="exit-study" x-show="context === $el.dataset.content" @input="input()">
+            <div>exit study</div>
+            <input class="popup__input" type="text">
+          </div>
         </div>
         <div class="popup__controls">
           <button class="popup__cancel" @click="cancel()">キャンセル</button>
