@@ -12,24 +12,23 @@
 <body x-data="body">
   <div class="wrapper">
     <header>
-      <div class="category" x-data="category" :class="{'opened': isOpen}" @click.outside="isOpen = false">
-        <button class="category__current" @click="isOpen = !isOpen">
-          <span class="category__current-name" x-text="currentCategory?.name"></span>
-          <svg class="category__dropdown-indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
+      <div class="dropdown category" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
+        <button class="dropdown__current" @click="isOpen = !isOpen">
+          <span class="dropdown__current-name" x-text="currentCategory?.name"></span>
+          <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M8 9l4 -4l4 4" />
             <path d="M16 15l-4 4l-4 -4" />
           </svg>
         </button>
-        <div class="category__dropdown">
-          <div class="category__dropdown-label">Select category</div>
+        <div class="dropdown__menu">
+          <div class="dropdown__label">Select category</div>
           <template x-for="category in categories">
             <div
-              class="category__dropdown-option"
-              :class="{'current': category.id === currentCategory?.id}"
+              class="dropdown__option"
+              :class="{ 'current': category.id === currentCategory?.id }"
               x-text="category.name"
-              @click="selectCategory(category.id)">
-            </div>
+              @click="selectCategory(category.id)"></div>
           </template>
         </div>
       </div>
