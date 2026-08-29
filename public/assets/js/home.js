@@ -15,17 +15,52 @@ const STORAGE_DEFAULT = {
   [STORAGE_KEYS.TIME]: 0,
 };
 
+const loadLocalStorage = () => {
+  const storage = {};
+  for (const key of Object.keys(STORAGE_DEFAULT)) {
+    const value = localStorage.getItem(key);
+
+    if (value === null) {
+      storage[key] = STORAGE_DEFAULT[key];
+      continue;
+    }
+
+    storage[key] = JSON.parse(value);
+  }
+
+  return storage;
+};
+
+const saveLocalStorage = (data) => {
+  for (const [key, value] of Object.entries(data)) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+};
+
 document.addEventListener("alpine:init", () => {
+  Alpine.store("storage", {
+    data: {},
+
+    init() {
+      this.data = loadLocalStorage();
+
+      Alpine.watch(
+        () => this.data,
+        () => {
+          saveLocalStorage(this.data);
+        },
+      );
+    },
+  });
+
   Alpine.data("popup", AlpinePopup);
 
   Alpine.data("body", () => ({
-    storage: {},
     categories: [],
     currentCategory: null,
 
     async init() {
       this.initPopup();
-      this.initStorage();
       await this.initCategory();
     },
 
@@ -52,14 +87,6 @@ document.addEventListener("alpine:init", () => {
       });
     },
 
-    initStorage() {
-      this.storage = this.loadLocalStorage();
-
-      this.$watch("storage", () => {
-        this.saveLocalStorage(this.storage);
-      });
-    },
-
     async initCategory() {
       this.categories = await this.loadCategories();
 
@@ -70,28 +97,6 @@ document.addEventListener("alpine:init", () => {
 
       await this.initCurrentCategory();
       this.sortRecords();
-    },
-
-    loadLocalStorage() {
-      const storage = {};
-      for (const key of Object.keys(STORAGE_DEFAULT)) {
-        const value = localStorage.getItem(key);
-
-        if (value === null) {
-          storage[key] = STORAGE_DEFAULT[key];
-          continue;
-        }
-
-        storage[key] = JSON.parse(value);
-      }
-
-      return storage;
-    },
-
-    saveLocalStorage(data) {
-      for (const [key, value] of Object.entries(data)) {
-        localStorage.setItem(key, JSON.stringify(value));
-      }
     },
 
     async loadCategories() {
@@ -115,12 +120,12 @@ document.addEventListener("alpine:init", () => {
     },
 
     async initCurrentCategory() {
-      let categoryId = this.storage[STORAGE_KEYS.CURRENT_CATEGORY_ID];
+      let categoryId = this.$store.storage.data[STORAGE_KEYS.CURRENT_CATEGORY_ID];
 
       const isValid = this.categories.some((category) => category.id === categoryId);
       if (!isValid) {
         categoryId = this.categories[0]?.id ?? null;
-        this.storage[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
+        this.$store.storage.data[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
       }
 
       if (categoryId === null) {
@@ -154,7 +159,7 @@ document.addEventListener("alpine:init", () => {
 
     async selectCategory(categoryId) {
       this.currentCategory = await this.loadCategory(categoryId);
-      this.storage[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
+      this.$store.storage.data[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
       this.isOpen = false;
     },
   }));
@@ -303,9 +308,9 @@ document.addEventListener("alpine:init", () => {
     },
 
     startStudy() {
-      this.storage[STORAGE_KEYS.TIME] = 0;
-      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
-      this.storage[STORAGE_KEYS.IS_STUDYING] = true;
+      this.$store.storage.data[STORAGE_KEYS.TIME] = 0;
+      this.$store.storage.data[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
+      this.$store.storage.data[STORAGE_KEYS.IS_STUDYING] = true;
     },
   }));
 
@@ -341,15 +346,15 @@ document.addEventListener("alpine:init", () => {
     },
 
     set isStudying(isStudying) {
-      this.storage[STORAGE_KEYS.IS_STUDYING] = isStudying;
+      this.$store.storage.data[STORAGE_KEYS.IS_STUDYING] = isStudying;
     },
 
     set isTimerPaused(isTimerPaused) {
-      this.storage[STORAGE_KEYS.IS_TIMER_PAUSED] = isTimerPaused;
+      this.$store.storage.data[STORAGE_KEYS.IS_TIMER_PAUSED] = isTimerPaused;
     },
 
     set time(time) {
-      this.storage[STORAGE_KEYS.TIME] = time;
+      this.$store.storage.data[STORAGE_KEYS.TIME] = time;
     },
 
     get formattedTime() {
