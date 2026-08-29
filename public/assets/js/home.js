@@ -43,7 +43,7 @@ document.addEventListener("alpine:init", () => {
     isOpen: false,
 
     async selectCategory(categoryId) {
-      this.$store.category.currentCategory = await this.loadCategory(categoryId);
+      await this.$store.category.setCurrentCategory(categoryId);
       this.$store.storage.set("currentCategoryId", categoryId);
       this.isOpen = false;
     },
