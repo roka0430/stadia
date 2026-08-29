@@ -14,7 +14,7 @@
     <header>
       <div class="dropdown category" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
         <button class="dropdown__current" @click="isOpen = !isOpen">
-          <span class="dropdown__current-name" x-text="currentCategory?.name"></span>
+          <span class="dropdown__current-name" x-text="$store.category.currentCategory?.name"></span>
           <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M8 9l4 -4l4 4" />
@@ -23,10 +23,10 @@
         </button>
         <div class="dropdown__menu">
           <div class="dropdown__label">Select category</div>
-          <template x-for="category in categories">
+          <template x-for="category in $store.category.categories">
             <div
               class="dropdown__option"
-              :class="{ 'current': category.id === currentCategory?.id }"
+              :class="{ 'current': category.id === $store.category.currentCategory?.id }"
               x-text="category.name"
               @click="selectCategory(category.id)"></div>
           </template>
@@ -104,7 +104,7 @@
           </div>
           <div class="statistics__subjects-separator"></div>
           <div class="statistics__subjects-list">
-            <template x-if="records.length === 0">
+            <template x-if="$store.category.records.length === 0">
               <div class="statistics__subjects-list-message">
                 科目がありません
               </div>
@@ -160,7 +160,7 @@
           </div>
           <div class="total__card">
             <div class="total__card-label">総学習回数</div>
-            <div class="total__card-value"><span x-text="records.length"></span>回</div>
+            <div class="total__card-value"><span x-text="$store.category.records.length"></span>回</div>
           </div>
           <div class="total__card">
             <div class="total__card-label">学習日数</div>
@@ -168,17 +168,17 @@
           </div>
           <div class="total__card">
             <div class="total__card-label">平均学習時間</div>
-            <div class="total__card-value"><span x-text="calcStudyData(records.length ? totalStudyData.seconds / records.length : 0).string"></span></div>
+            <div class="total__card-value"><span x-text="calcStudyData($store.category.records.length ? totalStudyData.seconds / $store.category.records.length : 0).string"></span></div>
           </div>
         </div>
       </section>
       <section class="home__section home__records">
         <div class="records__label">過去の記録</div>
         <div class="records__list">
-          <template x-if="records.length === 0">
+          <template x-if="$store.category.records.length === 0">
             <div class="records__no-record-message">記録がありません</div>
           </template>
-          <template x-for="record in records">
+          <template x-for="record in $store.category.records">
             <div class="records__item">
               <span x-text="formatDate(record.date, 'YY-MM-DD HH:mm')"></span>
               <span x-text="record.name"></span>
@@ -240,7 +240,7 @@
               <p>科目を選択してください。</p>
               <div class="dropdown popup__dropdown" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
                 <button class="dropdown__current" @click="isOpen = !isOpen">
-                  <span class="dropdown__current-name" x-text="currentCategory?.name"></span>
+                  <span class="dropdown__current-name" x-text="$store.category.currentCategory?.name"></span>
                   <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M8 9l4 -4l4 4" />
@@ -249,10 +249,10 @@
                 </button>
                 <div class="dropdown__menu">
                   <div class="dropdown__label">Select subject</div>
-                  <template x-for="category in categories">
+                  <template x-for="category in $store.category.categories">
                     <div
                       class="dropdown__option"
-                      :class="{ 'current': category.id === currentCategory?.id }"
+                      :class="{ 'current': category.id === $store.category.currentCategory?.id }"
                       x-text="category.name"
                       @click="selectCategory(category.id)"></div>
                   </template>

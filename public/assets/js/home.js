@@ -1,20 +1,18 @@
-import Storage from "./storage/storage.js";
+import Storage from "./stores/Storage.js";
+import Category from "./stores/Category.js";
 
 import Popup from "./popup/Popup.js";
 import AlpinePopup from "./popup/AlpinePopup.js";
 
 document.addEventListener("alpine:init", () => {
   Alpine.store("storage", Storage);
+  Alpine.store("category", Category);
 
   Alpine.data("popup", AlpinePopup);
 
   Alpine.data("body", () => ({
-    categories: [],
-    currentCategory: null,
-
     async init() {
       this.initPopup();
-      await this.initCategory();
     },
 
     initPopup() {
@@ -39,79 +37,13 @@ document.addEventListener("alpine:init", () => {
         validate: null,
       });
     },
-
-    async initCategory() {
-      this.categories = await this.loadCategories();
-
-      if (this.categories.length === 0) {
-        console.log("no-category");
-        return;
-      }
-
-      await this.initCurrentCategory();
-      this.sortRecords();
-    },
-
-    async loadCategories() {
-      const res = await fetch("/api/category");
-
-      if (!res.ok) {
-        throw new Error("failed to load categories.");
-      }
-
-      return await res.json();
-    },
-
-    async loadCategory(categoryId) {
-      const res = await fetch(`/api/category/${categoryId}`);
-
-      if (!res.ok) {
-        throw new Error("failed to load category.");
-      }
-
-      return await res.json();
-    },
-
-    async initCurrentCategory() {
-      let categoryId = this.$store.storage.get("currentCategoryId");
-
-      const isValid = this.categories.some((category) => category.id === categoryId);
-      if (!isValid) {
-        categoryId = this.categories[0]?.id ?? null;
-        this.$store.storage.set("currentCategoryId", categoryId);
-      }
-
-      if (categoryId === null) {
-        this.currentCategory = null;
-        return;
-      }
-
-      this.currentCategory = await this.loadCategory(categoryId);
-    },
-
-    sortRecords() {
-      this.currentCategory.records.sort((a, b) => new Date(b.date) - new Date(a.date));
-    },
-
-    get records() {
-      if (this.currentCategory === null) {
-        return [];
-      }
-
-      return this.currentCategory.records;
-    },
-
-    get subjectNames() {
-      const names = this.records.map(({ name }) => name);
-      return [...new Set(names)];
-    },
   }));
 
   Alpine.data("category", () => ({
     isOpen: false,
 
     async selectCategory(categoryId) {
-      this.currentCategory = await this.loadCategory(categoryId);
+      this.$store.category.currentCategory = await this.loadCategory(categoryId);
       this.$store.storage.set("currentCategoryId", categoryId);
       this.isOpen = false;
     },
@@ -136,7 +68,7 @@ document.addEventListener("alpine:init", () => {
       const dt = new Date(date);
       dt.setHours(0, 0, 0, 0);
 
-      return this.records.filter((record) => this.compareDate(new Date(record.date), dt));
+      return this.$store.category.records.filter((record) => this.compareDate(new Date(record.date), dt));
     },
 
     get todayStudyData() {
@@ -144,7 +76,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     get totalStudyData() {
-      return this.calcTotalStudyData(this.records);
+      return this.calcTotalStudyData(this.$store.category.records);
     },
 
     calcTotalStudyData(records) {
@@ -187,7 +119,7 @@ document.addEventListener("alpine:init", () => {
     get subjectStudyData() {
       const studyData = {};
 
-      for (const { name, time } of this.currentCategory?.records ?? []) {
+      for (const { name, time } of this.$store.category.currentCategory?.records ?? []) {
         studyData[name] = (studyData[name] ?? 0) + time;
       }
 
@@ -230,7 +162,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     get studyDates() {
-      const dates = this.records.map(({ date }) => date);
+      const dates = this.$store.category.records.map(({ date }) => date);
       return [...new Set(dates)];
     },
 
