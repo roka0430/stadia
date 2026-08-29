@@ -28,7 +28,8 @@ document.addEventListener("alpine:init", () => {
         confirm: "記録",
         type: "success",
         validate: (content) => {
-          return content.querySelector(".dropdown__current-name").textContent !== "";
+          const name = content.querySelector(".dropdown__current-name");
+          return name !== null && name.textContent.trim() !== "";
         },
       });
 
@@ -283,7 +284,8 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      console.log("record");
+      const subjectName = res.content.querySelector(".dropdown__current-name").textContent;
+      console.log("record", subjectName);
     },
 
     toggleTimer() {
