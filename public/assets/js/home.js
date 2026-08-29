@@ -43,13 +43,15 @@ document.addEventListener("alpine:init", () => {
 
     init() {
       this.data = loadLocalStorage();
+    },
 
-      Alpine.watch(
-        () => this.data,
-        () => {
-          saveLocalStorage(this.data);
-        },
-      );
+    get(key) {
+      return this.data[key];
+    },
+
+    set(key, value) {
+      this.data[key] = value;
+      saveLocalStorage(this.data);
     },
   });
 
@@ -120,12 +122,12 @@ document.addEventListener("alpine:init", () => {
     },
 
     async initCurrentCategory() {
-      let categoryId = this.$store.storage.data[STORAGE_KEYS.CURRENT_CATEGORY_ID];
+      let categoryId = this.$store.storage.get(STORAGE_KEYS.CURRENT_CATEGORY_ID);
 
       const isValid = this.categories.some((category) => category.id === categoryId);
       if (!isValid) {
         categoryId = this.categories[0]?.id ?? null;
-        this.$store.storage.data[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
+        this.$store.storage.set(STORAGE_KEYS.CURRENT_CATEGORY_ID, categoryId);
       }
 
       if (categoryId === null) {
@@ -159,7 +161,7 @@ document.addEventListener("alpine:init", () => {
 
     async selectCategory(categoryId) {
       this.currentCategory = await this.loadCategory(categoryId);
-      this.$store.storage.data[STORAGE_KEYS.CURRENT_CATEGORY_ID] = categoryId;
+      this.$store.storage.set(STORAGE_KEYS.CURRENT_CATEGORY_ID, categoryId);
       this.isOpen = false;
     },
   }));
@@ -308,9 +310,9 @@ document.addEventListener("alpine:init", () => {
     },
 
     startStudy() {
-      this.$store.storage.data[STORAGE_KEYS.TIME] = 0;
-      this.$store.storage.data[STORAGE_KEYS.IS_TIMER_PAUSED] = false;
-      this.$store.storage.data[STORAGE_KEYS.IS_STUDYING] = true;
+      this.$store.storage.set(STORAGE_KEYS.TIME, 0);
+      this.$store.storage.set(STORAGE_KEYS.IS_TIMER_PAUSED, false);
+      this.$store.storage.set(STORAGE_KEYS.IS_STUDYING, true);
     },
   }));
 
@@ -334,27 +336,27 @@ document.addEventListener("alpine:init", () => {
     },
 
     get isStudying() {
-      return this.storage?.[STORAGE_KEYS.IS_STUDYING];
+      return this.$store.storage.get(STORAGE_KEYS.IS_STUDYING);
     },
 
     get isTimerPaused() {
-      return this.storage?.[STORAGE_KEYS.IS_TIMER_PAUSED];
+      return this.$store.storage.get(STORAGE_KEYS.IS_TIMER_PAUSED);
     },
 
     get time() {
-      return this.storage?.[STORAGE_KEYS.TIME];
+      return this.$store.storage.get(STORAGE_KEYS.TIME);
     },
 
     set isStudying(isStudying) {
-      this.$store.storage.data[STORAGE_KEYS.IS_STUDYING] = isStudying;
+      this.$store.storage.set(STORAGE_KEYS.IS_STUDYING, isStudying);
     },
 
     set isTimerPaused(isTimerPaused) {
-      this.$store.storage.data[STORAGE_KEYS.IS_TIMER_PAUSED] = isTimerPaused;
+      this.$store.storage.set(STORAGE_KEYS.IS_TIMER_PAUSED, isTimerPaused);
     },
 
     set time(time) {
-      this.$store.storage.data[STORAGE_KEYS.TIME] = time;
+      this.$store.storage.set(STORAGE_KEYS.TIME, time);
     },
 
     get formattedTime() {
