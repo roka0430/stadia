@@ -28,7 +28,6 @@ document.addEventListener("alpine:init", () => {
         confirm: "記録",
         type: "success",
         validate: (content) => {
-          console.log(content.querySelector(".dropdown__current-name").textContent);
           return content.querySelector(".dropdown__current-name").textContent !== "";
         },
       });
