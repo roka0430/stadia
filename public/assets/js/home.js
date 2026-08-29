@@ -1,59 +1,10 @@
+import Storage from "./storage/storage.js";
+
 import Popup from "./popup/Popup.js";
 import AlpinePopup from "./popup/AlpinePopup.js";
 
-const STORAGE_KEYS = {
-  CURRENT_CATEGORY_ID: "stadia:current_category_id",
-  IS_STUDYING: "stadia:is_studying",
-  IS_TIMER_PAUSED: "stadia:is_timer_paused",
-  TIME: "stadia:time",
-};
-
-const STORAGE_DEFAULT = {
-  [STORAGE_KEYS.CURRENT_CATEGORY_ID]: null,
-  [STORAGE_KEYS.IS_STUDYING]: false,
-  [STORAGE_KEYS.IS_TIMER_PAUSED]: true,
-  [STORAGE_KEYS.TIME]: 0,
-};
-
-const loadLocalStorage = () => {
-  const storage = {};
-  for (const key of Object.keys(STORAGE_DEFAULT)) {
-    const value = localStorage.getItem(key);
-
-    if (value === null) {
-      storage[key] = STORAGE_DEFAULT[key];
-      continue;
-    }
-
-    storage[key] = JSON.parse(value);
-  }
-
-  return storage;
-};
-
-const saveLocalStorage = (data) => {
-  for (const [key, value] of Object.entries(data)) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-};
-
 document.addEventListener("alpine:init", () => {
-  Alpine.store("storage", {
-    data: {},
-
-    init() {
-      this.data = loadLocalStorage();
-    },
-
-    get(key) {
-      return this.data[key];
-    },
-
-    set(key, value) {
-      this.data[key] = value;
-      saveLocalStorage(this.data);
-    },
-  });
+  Alpine.store("storage", Storage);
 
   Alpine.data("popup", AlpinePopup);
 
@@ -122,12 +73,12 @@ document.addEventListener("alpine:init", () => {
     },
 
     async initCurrentCategory() {
-      let categoryId = this.$store.storage.get(STORAGE_KEYS.CURRENT_CATEGORY_ID);
+      let categoryId = this.$store.storage.get("currentCategoryId");
 
       const isValid = this.categories.some((category) => category.id === categoryId);
       if (!isValid) {
         categoryId = this.categories[0]?.id ?? null;
-        this.$store.storage.set(STORAGE_KEYS.CURRENT_CATEGORY_ID, categoryId);
+        this.$store.storage.set("currentCategoryId", categoryId);
       }
 
       if (categoryId === null) {
@@ -161,7 +112,7 @@ document.addEventListener("alpine:init", () => {
 
     async selectCategory(categoryId) {
       this.currentCategory = await this.loadCategory(categoryId);
-      this.$store.storage.set(STORAGE_KEYS.CURRENT_CATEGORY_ID, categoryId);
+      this.$store.storage.set("currentCategoryId", categoryId);
       this.isOpen = false;
     },
   }));
@@ -310,9 +261,9 @@ document.addEventListener("alpine:init", () => {
     },
 
     startStudy() {
-      this.$store.storage.set(STORAGE_KEYS.TIME, 0);
-      this.$store.storage.set(STORAGE_KEYS.IS_TIMER_PAUSED, false);
-      this.$store.storage.set(STORAGE_KEYS.IS_STUDYING, true);
+      this.$store.storage.set("time", 0);
+      this.$store.storage.set("isTimerPaused", false);
+      this.$store.storage.set("isStudying", true);
     },
   }));
 
@@ -336,27 +287,27 @@ document.addEventListener("alpine:init", () => {
     },
 
     get isStudying() {
-      return this.$store.storage.get(STORAGE_KEYS.IS_STUDYING);
+      return this.$store.storage.get("isStudying");
     },
 
     get isTimerPaused() {
-      return this.$store.storage.get(STORAGE_KEYS.IS_TIMER_PAUSED);
+      return this.$store.storage.get("isTimerPaused");
     },
 
     get time() {
-      return this.$store.storage.get(STORAGE_KEYS.TIME);
+      return this.$store.storage.get("time");
     },
 
     set isStudying(isStudying) {
-      this.$store.storage.set(STORAGE_KEYS.IS_STUDYING, isStudying);
+      this.$store.storage.set("isStudying", isStudying);
     },
 
     set isTimerPaused(isTimerPaused) {
-      this.$store.storage.set(STORAGE_KEYS.IS_TIMER_PAUSED, isTimerPaused);
+      this.$store.storage.set("isTimerPaused", isTimerPaused);
     },
 
     set time(time) {
-      this.$store.storage.set(STORAGE_KEYS.TIME, time);
+      this.$store.storage.set("time", time);
     },
 
     get formattedTime() {
