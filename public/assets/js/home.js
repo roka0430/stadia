@@ -27,7 +27,10 @@ document.addEventListener("alpine:init", () => {
         title: "学習を記録する",
         confirm: "記録",
         type: "success",
-        validate: null,
+        validate: (content) => {
+          console.log(content.querySelector(".dropdown__current-name").textContent);
+          return content.querySelector(".dropdown__current-name").textContent !== "";
+        },
       });
 
       Popup.register("study-too-short", {
@@ -301,6 +304,24 @@ document.addEventListener("alpine:init", () => {
         this.time++;
         this.tick();
       }, 1000);
+    },
+  }));
+
+  Alpine.data("popupRecordStudy", () => ({
+    isOpen: false,
+    selectedSubjectName: null,
+
+    selectSubject(subjectName) {
+      this.selectedSubjectName = subjectName;
+      this.isOpen = false;
+
+      this.$nextTick(() => {
+        this.$el.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+    },
+
+    createNewSubject() {
+      console.log("create");
     },
   }));
 });

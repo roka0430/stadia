@@ -236,11 +236,11 @@
             </div>
           </template>
           <template x-if="context === 'record-study'">
-            <div class="popup__content" data-content="record-study">
+            <div class="popup__content" data-content="record-study" x-data="popupRecordStudy">
               <p>科目を選択してください。</p>
               <div class="dropdown popup__dropdown" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
                 <button class="dropdown__current" @click="isOpen = !isOpen">
-                  <span class="dropdown__current-name" x-text="$store.category.currentCategory?.name"></span>
+                  <span class="dropdown__current-name" x-text="selectedSubjectName"></span>
                   <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M8 9l4 -4l4 4" />
@@ -249,13 +249,14 @@
                 </button>
                 <div class="dropdown__menu">
                   <div class="dropdown__label">Select subject</div>
-                  <template x-for="category in $store.category.categories">
+                  <template x-for="subjectName in $store.category.subjectNames">
                     <div
                       class="dropdown__option"
-                      :class="{ 'current': category.id === $store.category.currentCategory?.id }"
-                      x-text="category.name"
-                      @click="selectCategory(category.id)"></div>
+                      :class="{ 'current': subjectName === selectedSubjectName }"
+                      x-text="subjectName"
+                      @click="selectSubject(subjectName)"></div>
                   </template>
+                  <div class="dropdown__option" @click="createNewSubject()">new</div>
                 </div>
               </div>
             </div>
