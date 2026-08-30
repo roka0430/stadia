@@ -33,6 +33,15 @@ document.addEventListener("alpine:init", () => {
         },
       });
 
+      Popup.register("create-new-subject", {
+        title: "新しい科目の作成",
+        confirm: "作成",
+        type: "success",
+        validate: (content) => {
+          return content.querySelector(".popup__input").value.trim() !== "";
+        },
+      });
+
       Popup.register("study-too-short", {
         title: "記録できません",
         confirm: "OK",
@@ -280,12 +289,12 @@ document.addEventListener("alpine:init", () => {
       }
 
       const res = await Popup.open("record-study");
+
       if (!res.action) {
         return;
       }
 
       const subjectName = res.content.querySelector(".dropdown__current-name").textContent;
-      console.log("record", subjectName);
     },
 
     toggleTimer() {
@@ -321,8 +330,14 @@ document.addEventListener("alpine:init", () => {
       });
     },
 
-    createNewSubject() {
-      console.log("create");
+    async createNewSubject() {
+      const res = await Popup.open("create-new-subject");
+
+      if (!res.action) {
+        return;
+      }
+
+      this.selectedSubjectName = res.content.querySelector(".popup__input").value;
     },
   }));
 });

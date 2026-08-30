@@ -235,8 +235,8 @@
               <p>学習記録を破棄して終了しますか？</p>
             </div>
           </template>
-          <template x-if="context === 'record-study'">
-            <div class="popup__content" data-content="record-study" x-data="popupRecordStudy">
+          <template x-if="context === 'record-study'" x-data="popupRecordStudy">
+            <div class="popup__content" data-content="record-study">
               <p>科目を選択してください。</p>
               <div class="dropdown popup__dropdown" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
                 <button class="dropdown__current" @click="isOpen = !isOpen">
@@ -259,6 +259,12 @@
                   <div class="dropdown__option" @click="createNewSubject()">new</div>
                 </div>
               </div>
+            </div>
+          </template>
+          <template x-if="context === 'create-new-subject'">
+            <div class="popup__content" data-content="create-new-subject">
+              <p>新しい科目名を入力してください。</p>
+              <input type="text" class="popup__input">
             </div>
           </template>
           <template x-if="context === 'study-too-short'">

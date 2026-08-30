@@ -19,7 +19,11 @@ export default () => ({
       this.confirm = Popup.popup.confirm;
       this.type = Popup.popup.type;
       this.validate = Popup.popup.validate;
-      this.disable = this.validate === null ? false : true;
+      this.disable = true;
+
+      this.$nextTick(() => {
+        this.input();
+      });
     });
   },
 
@@ -32,7 +36,12 @@ export default () => ({
   },
 
   input() {
+    if (this.context === null) {
+      return;
+    }
+
     if (this.validate === null) {
+      this.disable = false;
       return;
     }
 
