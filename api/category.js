@@ -40,7 +40,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/:id", (req, res) => {
-  const id = Number(req.params.id);
+  const categoryId = Number(req.params.id);
   const { name, time, date } = req.body;
 
   if (name == null || time == null || date == null) {
@@ -50,7 +50,7 @@ router.post("/:id", (req, res) => {
   }
 
   const indexData = load(fs.readFileSync(INDEX_PATH, "utf-8"));
-  const target = indexData.find((datum) => datum.id === id);
+  const target = indexData.find((datum) => datum.id === categoryId);
 
   if (!target) {
     return res.status(404).json({
@@ -58,7 +58,7 @@ router.post("/:id", (req, res) => {
     });
   }
 
-  const categoryPath = `${CATEGORY_DIR}/${id}.yaml`;
+  const categoryPath = `${CATEGORY_DIR}/${categoryId}.yaml`;
 
   if (!fs.existsSync(categoryPath)) {
     return res.status(404).json({
@@ -67,7 +67,15 @@ router.post("/:id", (req, res) => {
   }
 
   const category = load(fs.readFileSync(categoryPath, "utf-8"));
-  const record = { name, time, date };
+
+  let id = 1;
+  const recordIds = category.records.map((record) => record.id);
+
+  while (recordIds.includes(id)) {
+    id++;
+  }
+
+  const record = { id, name, time, date };
 
   category.records.push(record);
 
