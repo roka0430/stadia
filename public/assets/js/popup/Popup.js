@@ -1,8 +1,15 @@
 class Popup {
   constructor() {
     this.popups = {};
-    this.context = null;
-    this.resolve = null;
+    this.stacks = [];
+  }
+
+  get current() {
+    return this.stacks.at(-1) ?? null;
+  }
+
+  get context() {
+    return this.current?.context ?? null;
   }
 
   get popup() {
@@ -18,26 +25,21 @@ class Popup {
       return null;
     }
 
-    this.context = context;
-    this.notify();
-
     return new Promise((resolve) => {
-      this.resolve = resolve;
+      this.stacks.push({ context, resolve });
+      this.notify();
     });
   }
 
-  close() {
-    this.context = null;
-    this.notify();
-  }
-
   finish(action, content) {
-    if (this.resolve) {
-      this.resolve({ action, content });
+    if (!this.current) {
+      return;
     }
 
-    this.resolve = null;
-    this.close();
+    this.current.resolve({ action, content });
+
+    this.stacks.pop();
+    this.notify();
   }
 
   notify() {
