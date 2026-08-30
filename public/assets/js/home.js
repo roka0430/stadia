@@ -296,7 +296,7 @@ document.addEventListener("alpine:init", () => {
 
       const subjectName = res.content.querySelector(".dropdown__current-name").textContent;
 
-      this.$store.category.recordStudy(subjectName, this.time);
+      await this.$store.category.recordStudy(subjectName, this.time);
     },
 
     toggleTimer() {

@@ -1,6 +1,6 @@
 import express from "express";
 import fs, { existsSync } from "fs";
-import { load } from "js-yaml";
+import { load, dump } from "js-yaml";
 
 const INDEX_PATH = "./data/index.yaml";
 const CATEGORY_DIR = "./data/categories";
@@ -25,9 +25,8 @@ router.get("/:id", (req, res) => {
   }
 
   const categoryPath = `${CATEGORY_DIR}/${id}.yaml`;
-  const categoryExists = fs.existsSync(categoryPath);
 
-  if (!categoryExists) {
+  if (!fs.existsSync(categoryPath)) {
     return res.status(404).json({
       error: "category file not found.",
     });
@@ -38,6 +37,43 @@ router.get("/:id", (req, res) => {
   category.name = target.name;
 
   res.json(category);
+});
+
+router.post("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const { name, time, date } = req.body;
+
+  if (name == null || time == null || date == null) {
+    return res.status(400).json({
+      error: "name, time, and date are required",
+    });
+  }
+
+  const indexData = load(fs.readFileSync(INDEX_PATH, "utf-8"));
+  const target = indexData.find((datum) => datum.id === id);
+
+  if (!target) {
+    return res.status(404).json({
+      error: "category id not found.",
+    });
+  }
+
+  const categoryPath = `${CATEGORY_DIR}/${id}.yaml`;
+
+  if (!fs.existsSync(categoryPath)) {
+    return res.status(404).json({
+      error: "category file not found.",
+    });
+  }
+
+  const category = load(fs.readFileSync(categoryPath, "utf-8"));
+  const record = { name, time, date };
+
+  category.records.push(record);
+
+  fs.writeFileSync(categoryPath, dump(category), "utf-8");
+
+  return res.status(201).json(record);
 });
 
 export default router;

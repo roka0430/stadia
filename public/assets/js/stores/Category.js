@@ -18,6 +18,22 @@ const loadCategory = async (categoryId) => {
   return await res.json();
 };
 
+const recordStudy = async (categoryId, name, time) => {
+  const date = new Date();
+
+  const res = await fetch(`/api/category/${categoryId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, time, date }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to record study");
+  }
+
+  return await res.json();
+};
+
 const sortRecords = (records) => {
   records.sort((a, b) => new Date(b.date) - new Date(a.date));
 };
@@ -75,13 +91,11 @@ export default {
     return this.categories.some((category) => category.id === categoryId);
   },
 
-  recordStudy(name, time) {
+  async recordStudy(name, time) {
     if (name == null || time == null) {
       return;
     }
 
-    const date = new Date();
-    this.records.push({ name, time, date });
-    sortRecords(this.records);
+    return await recordStudy(this.currentCategory.id, name, time);
   },
 };
