@@ -488,8 +488,6 @@ header {
   grid-template-columns: subgrid;
 
   border-bottom: solid 1px transparent;
-
-  cursor: pointer;
 }
 
 .records__item span {
@@ -519,6 +517,14 @@ header {
   transition: all 0.1s;
 }
 
+.records__menu button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .records__item:hover .records__menu {
   opacity: 1;
 }
@@ -528,7 +534,7 @@ header {
   transition: all 0.1s;
 }
 
-.records__menu svg:hover {
+.records__menu button:hover svg {
   stroke: var(--color-text);
 }
 
