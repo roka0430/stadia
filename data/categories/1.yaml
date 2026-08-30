@@ -39,30 +39,10 @@ records:
     name: 数学
     time: 12421
     date: '2026-08-30T07:31:15.768Z'
-  - id: 13
-    name: 今日1
-    time: 12421
-    date: '2026-08-30T07:31:23.124Z'
-  - id: 14
-    name: 今日1
-    time: 12421
-    date: '2026-08-30T07:31:32.903Z'
-  - id: 15
-    name: 今日1
-    time: 12421
-    date: '2026-08-30T07:34:11.384Z'
-  - id: 16
-    name: 今日1
-    time: 12421
-    date: '2026-08-30T07:34:44.116Z'
   - id: 17
     name: 数学aaaaaaaaaaaaaaaaaaaaa
     time: 12421
     date: '2026-08-30T07:36:07.512Z'
-  - id: 18
-    name: 数学aaaaaaaaaaaaaaaaaaaaa
-    time: 42423
-    date: '2026-08-30T07:39:48.369Z'
   - id: 19
     name: 今日1
     time: 423
@@ -71,7 +51,3 @@ records:
     name: 社会
     time: 1800
     date: '2026-08-30T07:41:07.417Z'
-  - id: 21
-    name: 新しい科目
-    time: 73
-    date: '2026-08-30T07:49:33.305Z'

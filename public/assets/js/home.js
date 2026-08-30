@@ -228,6 +228,10 @@ document.addEventListener("alpine:init", () => {
 
       this.$store.category.deleteRecord(recordId);
     },
+
+    async editRecord(recordId) {
+      console.log("edit", recordId);
+    },
   }));
 
   Alpine.data("study", () => ({
