@@ -84,4 +84,48 @@ router.post("/:id", (req, res) => {
   return res.status(201).json(record);
 });
 
+router.delete("/:categoryId/record/:recordId", (req, res) => {
+  const categoryId = Number(req.params.categoryId);
+  const recordId = Number(req.params.recordId);
+
+  if (recordId == null) {
+    return res.status(400).json({
+      error: "recordId is required",
+    });
+  }
+
+  const indexData = load(fs.readFileSync(INDEX_PATH, "utf-8"));
+  const target = indexData.find((datum) => datum.id === categoryId);
+
+  if (!target) {
+    return res.status(404).json({
+      error: "category id not found.",
+    });
+  }
+
+  const categoryPath = `${CATEGORY_DIR}/${categoryId}.yaml`;
+
+  if (!fs.existsSync(categoryPath)) {
+    return res.status(404).json({
+      error: "category file not found.",
+    });
+  }
+
+  const category = load(fs.readFileSync(categoryPath, "utf-8"));
+
+  const targetIndex = category.records.findIndex((record) => record.id === recordId);
+
+  if (targetIndex === -1) {
+    return res.status(404).json({
+      error: "record not found.",
+    });
+  }
+
+  category.records.splice(targetIndex, 1);
+
+  fs.writeFileSync(categoryPath, dump(category), "utf-8");
+
+  return res.status(200).send();
+});
+
 export default router;

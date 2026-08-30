@@ -34,6 +34,18 @@ const recordStudy = async (categoryId, name, time) => {
   return await res.json();
 };
 
+const deleteRecord = async (categoryId, recordId) => {
+  const res = await fetch(`api/category/${categoryId}/record/${recordId}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to delete record");
+  }
+
+  return true;
+};
+
 const sortRecords = (records) => {
   records.sort((a, b) => new Date(b.date) - new Date(a.date));
 };
@@ -103,5 +115,23 @@ export default {
     sortRecords(this.records);
 
     return record;
+  },
+
+  async deleteRecord(recordId) {
+    if (recordId == null) {
+      return;
+    }
+
+    try {
+      await deleteRecord(this.currentCategory.id, recordId);
+
+      const index = this.records.findIndex((record) => record.id === recordId);
+
+      if (index !== -1) {
+        this.records.splice(index, 1);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   },
 };

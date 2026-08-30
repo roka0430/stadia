@@ -226,7 +226,7 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      console.log("delete", recordId);
+      this.$store.category.deleteRecord(recordId);
     },
   }));
 
