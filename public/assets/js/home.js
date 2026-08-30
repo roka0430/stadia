@@ -216,7 +216,7 @@ document.addEventListener("alpine:init", () => {
 
     init() {
       if (this.isStudying && this.isTimerPaused && this.time === 0) {
-        this.timerReset();
+        this.timerClose();
       }
 
       if (!this.isTimerPaused) {
@@ -272,10 +272,10 @@ document.addEventListener("alpine:init", () => {
         }
       }
 
-      this.timerReset();
+      this.timerClose();
     },
 
-    timerReset() {
+    timerClose() {
       clearTimeout(this.timeout);
       this.time = 0;
       this.isTimerPaused = true;
@@ -297,6 +297,8 @@ document.addEventListener("alpine:init", () => {
       const subjectName = res.content.querySelector(".dropdown__current-name").textContent;
 
       await this.$store.category.recordStudy(subjectName, this.time);
+
+      this.timerClose();
     },
 
     toggleTimer() {

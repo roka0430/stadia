@@ -96,6 +96,11 @@ export default {
       return;
     }
 
-    return await recordStudy(this.currentCategory.id, name, time);
+    const record = await recordStudy(this.currentCategory.id, name, time);
+
+    this.records.push(record);
+    sortRecords(this.records);
+
+    return record;
   },
 };
