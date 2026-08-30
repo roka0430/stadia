@@ -16,6 +16,15 @@ document.addEventListener("alpine:init", () => {
     },
 
     initPopup() {
+      Popup.register("delete-record", {
+        title: "学習記録の削除",
+        confirm: "削除",
+        type: "danger",
+        validate: (content) => {
+          return content.querySelector('input[type="checkbox"]').checked;
+        },
+      });
+
       Popup.register("exit-study", {
         title: "学習を終了する",
         confirm: "終了",
@@ -208,6 +217,16 @@ document.addEventListener("alpine:init", () => {
       this.$store.storage.set("time", 0);
       this.$store.storage.set("isTimerPaused", false);
       this.$store.storage.set("isStudying", true);
+    },
+
+    async deleteRecord(recordId) {
+      const res = await Popup.open("delete-record");
+
+      if (!res.action) {
+        return;
+      }
+
+      console.log("delete", recordId);
     },
   }));
 
