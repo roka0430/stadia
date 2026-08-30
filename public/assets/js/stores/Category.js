@@ -52,7 +52,8 @@ export default {
 
   get subjectNames() {
     const names = this.records.map(({ name }) => name);
-    return [...new Set(names)];
+    const uniqueNames = [...new Set(names)];
+    return uniqueNames.sort((a, b) => a.localeCompare(b));
   },
 
   async init() {
