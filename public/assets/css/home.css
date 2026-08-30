@@ -788,6 +788,12 @@ header {
 .popup__action[data-type="success"] {
   background: var(--color-success);
 }
+
 .popup__action[data-type="danger"] {
   background: var(--color-danger);
+}
+
+.popup__action:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
