@@ -74,4 +74,14 @@ export default {
   validateCategoryId(categoryId) {
     return this.categories.some((category) => category.id === categoryId);
   },
+
+  recordStudy(name, time) {
+    if (name == null || time == null) {
+      return;
+    }
+
+    const date = new Date();
+    this.records.push({ name, time, date });
+    sortRecords(this.records);
+  },
 };

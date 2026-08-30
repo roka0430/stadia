@@ -295,7 +295,8 @@ document.addEventListener("alpine:init", () => {
       }
 
       const subjectName = res.content.querySelector(".dropdown__current-name").textContent;
-      console.log("record", subjectName);
+
+      this.$store.category.recordStudy(subjectName, this.time);
     },
 
     toggleTimer() {
