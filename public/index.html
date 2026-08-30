@@ -23,7 +23,7 @@
         </button>
         <div class="dropdown__menu">
           <div class="dropdown__label">Select category</div>
-          <template x-for="category in $store.category.categories">
+          <template x-for="category in $store.category.categories" :key="category.id">
             <div
               class="dropdown__option"
               :class="{ 'current': category.id === $store.category.currentCategory?.id }"
@@ -109,7 +109,7 @@
                 科目がありません
               </div>
             </template>
-            <template x-for="[name, data] in sortedSubjectStudyData">
+            <template x-for="[name, data] in sortedSubjectStudyData" :key="name">
               <div class="statistics__subjects-list-item">
                 <div x-text="name"></div>
                 <div>
@@ -132,14 +132,14 @@
             }
           }">
           <div class="statistics__weekly-bars">
-            <template x-for="record in records">
+            <template x-for="record in records" :key="record.id">
               <div class="statistics__weekly-bar" :style="`--height: ${maxSeconds ? record.data.seconds / maxSeconds * 100 : 0}%;`">
                 <div class="statistics__weekly-value" x-text="record.data.string"></div>
               </div>
             </template>
           </div>
           <div class="statistics__weekly-labels">
-            <template x-for="record in records">
+            <template x-for="record in records" :key="record.id">
               <div class="statistics__weekly-label">
                 <template x-if="isToday(record.date)">
                   <span>今日</span>
@@ -178,7 +178,7 @@
           <template x-if="$store.category.records.length === 0">
             <div class="records__no-record-message">記録がありません</div>
           </template>
-          <template x-for="record in $store.category.records">
+          <template x-for="record in $store.category.records" :key="record.id">
             <div class="records__item">
               <span class="records__date" x-text="formatDate(record.date, 'YY-MM-DD HH:mm')"></span>
               <span class="records__name" x-text="record.name"></span>
@@ -268,7 +268,7 @@
                 </button>
                 <div class="dropdown__menu">
                   <div class="dropdown__label">Select subject</div>
-                  <template x-for="subjectName in $store.category.subjectNames">
+                  <template x-for="subjectName in $store.category.subjectNames" :key="subjectName">
                     <div
                       class="dropdown__option"
                       :class="{ 'current': subjectName === selectedSubjectName }"
