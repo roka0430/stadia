@@ -132,14 +132,14 @@
             }
           }">
           <div class="statistics__weekly-bars">
-            <template x-for="record in records" :key="record.id">
+            <template x-for="record in records">
               <div class="statistics__weekly-bar" :style="`--height: ${maxSeconds ? record.data.seconds / maxSeconds * 100 : 0}%;`">
                 <div class="statistics__weekly-value" x-text="record.data.string"></div>
               </div>
             </template>
           </div>
           <div class="statistics__weekly-labels">
-            <template x-for="record in records" :key="record.id">
+            <template x-for="record in records">
               <div class="statistics__weekly-label">
                 <template x-if="isToday(record.date)">
                   <span>今日</span>
