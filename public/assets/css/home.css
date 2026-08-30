@@ -462,9 +462,10 @@ header {
 .records__list {
   flex: 1;
 
-  display: flex;
+  display: grid;
   gap: 4px;
-  flex-direction: column;
+  grid-auto-rows: max-content;
+  grid-template-columns: max-content 1fr max-content max-content;
 
   position: relative;
 
@@ -474,6 +475,8 @@ header {
   border: solid 1px var(--color-border);
   border-radius: 8px;
 
+  font-size: 0.9rem;
+
   overflow-y: scroll;
   scrollbar-width: none;
 }
@@ -481,7 +484,12 @@ header {
 .records__item {
   display: grid;
   gap: 24px;
-  grid-template-columns: 4fr 3fr 3fr;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+
+  border-bottom: solid 1px transparent;
+
+  cursor: pointer;
 }
 
 .records__item span {
@@ -490,7 +498,7 @@ header {
   overflow: hidden;
 }
 
-.records__item span::after {
+.records__item .records__name::after {
   content: "";
 
   position: absolute;
@@ -501,6 +509,27 @@ header {
   width: 16px;
 
   background: linear-gradient(to right, transparent 0%, var(--color-surface) 100%);
+}
+
+.records__menu {
+  opacity: 0;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  transition: all 0.1s;
+}
+
+.records__item:hover .records__menu {
+  opacity: 1;
+}
+
+.records__menu svg {
+  stroke: var(--color-text-muted);
+  transition: all 0.1s;
+}
+
+.records__menu svg:hover {
+  stroke: var(--color-text);
 }
 
 .records__no-record-message {
