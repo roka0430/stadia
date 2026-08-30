@@ -295,6 +295,7 @@ document.addEventListener("alpine:init", () => {
       }
 
       const subjectName = res.content.querySelector(".dropdown__current-name").textContent;
+      console.log("record", subjectName);
     },
 
     toggleTimer() {
@@ -320,6 +321,14 @@ document.addEventListener("alpine:init", () => {
   Alpine.data("popupRecordStudy", () => ({
     isOpen: false,
     selectedSubjectName: null,
+
+    init() {
+      document.addEventListener("popup-changed", () => {
+        if (Popup.context === "record-study") {
+          this.selectedSubjectName = null;
+        }
+      });
+    },
 
     selectSubject(subjectName) {
       this.selectedSubjectName = subjectName;
