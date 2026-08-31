@@ -59,6 +59,16 @@ document.addEventListener("alpine:init", () => {
     },
 
     initPopup() {
+      Popup.register("add-record", {
+        title: "学習の記録",
+        confirm: "記録",
+        type: "success",
+        validate: (content) => {
+          const inputs = content.querySelectorAll(".popup__input");
+          return [...inputs].every((input) => input.value.trim() !== "");
+        },
+      });
+
       Popup.register("delete-record", {
         title: "学習記録の削除",
         confirm: "削除",
@@ -260,8 +270,22 @@ document.addEventListener("alpine:init", () => {
       this.$store.storage.set("isStudying", true);
     },
 
-    addStudyRecord() {
-      console.log("add");
+    async addStudyRecord() {
+      const res = await Popup.open("add-record");
+
+      if (!res.action) {
+        return;
+      }
+
+      const name = res.content.querySelector('input[name="name"]').value;
+      const time = res.content.querySelector('input[name="time"]').value;
+      const seconds = parseStudyTime(time);
+
+      if (seconds === null) {
+        return;
+      }
+
+      await this.$store.category.recordStudy(name, seconds);
     },
 
     async deleteRecord(recordId) {
@@ -271,7 +295,7 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      this.$store.category.deleteRecord(recordId);
+      await this.$store.category.deleteRecord(recordId);
     },
 
     async editRecord(recordId) {
@@ -289,7 +313,7 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      this.$store.category.editRecord(recordId, name, seconds);
+      await this.$store.category.editRecord(recordId, name, seconds);
     },
   }));
 

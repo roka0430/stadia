@@ -250,6 +250,18 @@
           <button class="popup__exit" @click="cancel()">×</button>
         </div>
         <div class="popup__contents" x-ref="popupContents" @input="input()">
+          <template x-if="context === 'add-record'">
+            <div class="popup__content" data-content="add-record">
+              <label class="popup__input-label">
+                <span>科目名</span>
+                <input type="text" class="popup__input" name="name" @focus="$el.select()" autocomplete="off">
+              </label>
+              <label class="popup__input-label">
+                <span>学習時間</span>
+                <input type="text" class="popup__input" name="time" placeholder="例: 1h30m" @focus="$el.select()" autocomplete="off">
+              </label>
+            </div>
+          </template>
           <template x-if="context === 'edit-record'" x-data="popupEditRecord">
             <div class="popup__content" data-content="edit-record">
               <label class="popup__input-label">
