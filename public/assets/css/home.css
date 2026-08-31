@@ -73,25 +73,34 @@ header {
   grid-column: 2 / 3;
 }
 
-/* start */
+/* action */
 
-.home__start {
+.home__action {
   display: flex;
+  gap: 16px;
   align-items: center;
   justify-content: center;
 }
 
-.start__button {
-  padding-block: 8px;
+.action__button {
+  padding-block: 8px 10px;
   padding-inline: 16px;
 
-  background: var(--color-success);
-  border: none;
   border-radius: 8px;
 
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 
   cursor: pointer;
+}
+
+.action__button.start-button {
+  background: var(--color-success);
+  border: none;
+}
+
+.action__button.add-button {
+  background: none;
+  border: solid 1px var(--color-border);
 }
 
 /* today */

@@ -35,8 +35,9 @@
     </header>
 
     <main class="home" x-data="home">
-      <section class="home__section home__start">
-        <button class="start__button" @click="startStudy()">学習を開始</button>
+      <section class="home__section home__action">
+        <button class="action__button start-button" @click="startStudy()">学習を開始</button>
+        <button class="action__button add-button" @click="addStudyRecord()">学習を記録</button>
       </section>
       <section class="home__section home__today">
         <div class="today__box">
