@@ -46,6 +46,20 @@ const deleteRecord = async (categoryId, recordId) => {
   return true;
 };
 
+const editRecord = async (categoryId, recordId, name, time) => {
+  const res = await fetch(`api/category/${categoryId}/record/${recordId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, time }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to edit record");
+  }
+
+  return true;
+};
+
 const sortRecords = (records) => {
   records.sort((a, b) => new Date(b.date) - new Date(a.date));
 };
@@ -129,6 +143,25 @@ export default {
 
       if (index !== -1) {
         this.records.splice(index, 1);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async editRecord(recordId, name, time) {
+    if (recordId == null || name == null || time == null) {
+      return;
+    }
+
+    try {
+      await editRecord(this.currentCategory.id, recordId, name, time);
+
+      const record = this.records.find((record) => record.id === recordId);
+
+      if (record) {
+        record.name = name;
+        record.time = time;
       }
     } catch (error) {
       console.error(error);

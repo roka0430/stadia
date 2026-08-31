@@ -44,10 +44,10 @@ records:
     time: 12421
     date: '2026-08-30T07:36:07.512Z'
   - id: 19
-    name: 今日1
-    time: 423
+    name: 今日3
+    time: 420
     date: '2026-08-30T07:40:36.909Z'
   - id: 20
     name: 社会
-    time: 1800
+    time: 120
     date: '2026-08-30T07:41:07.417Z'

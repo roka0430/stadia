@@ -279,9 +279,13 @@ document.addEventListener("alpine:init", () => {
 
       const name = res.content.querySelector('input[x-model="name"]').value;
       const time = res.content.querySelector('input[x-model="time"]').value;
-
       const seconds = parseStudyTime(time);
-      console.log(name, seconds);
+
+      if (seconds === null) {
+        return;
+      }
+
+      this.$store.category.editRecord(recordId, name, seconds);
     },
   }));
 
