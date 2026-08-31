@@ -252,10 +252,36 @@
         <div class="popup__contents" x-ref="popupContents" @input="input()">
           <template x-if="context === 'add-record'">
             <div class="popup__content" data-content="add-record">
-              <label class="popup__input-label">
-                <span>科目名</span>
-                <input type="text" class="popup__input" name="name" @focus="$el.select()" autocomplete="off">
-              </label>
+              <span>科目名</span>
+              <div class="dropdown popup__dropdown" x-data="subjectDropdown" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
+                <button class="dropdown__current" @click="isOpen = !isOpen">
+                  <span class="dropdown__current-name" x-text="selectedSubjectName"></span>
+                  <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M8 9l4 -4l4 4" />
+                    <path d="M16 15l-4 4l-4 -4" />
+                  </svg>
+                </button>
+                <div class="dropdown__menu">
+                  <div class="dropdown__label">Select subject</div>
+                  <template x-for="subjectName in $store.category.subjectNames" :key="subjectName">
+                    <div
+                      class="dropdown__option"
+                      :class="{ 'current': subjectName === selectedSubjectName }"
+                      x-text="subjectName"
+                      @click="selectSubject(subjectName)"></div>
+                  </template>
+                  <div class="dropdown__option popup__new-subject" @click="createNewSubject()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M12 5l0 14" />
+                      <path d="M5 12l14 0" />
+                    </svg>
+                    <span>新しい科目</span>
+                  </div>
+                </div>
+              </div>
+
               <label class="popup__input-label">
                 <span>学習時間</span>
                 <input type="text" class="popup__input" name="time" placeholder="例: 1h30m" @focus="$el.select()" autocomplete="off">
@@ -291,7 +317,7 @@
           <template x-if="context === 'record-study'" x-data="popupRecordStudy">
             <div class="popup__content" data-content="record-study">
               <p>科目を選択してください。</p>
-              <div class="dropdown popup__dropdown" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
+              <div class="dropdown popup__dropdown" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
                 <button class="dropdown__current" @click="isOpen = !isOpen">
                   <span class="dropdown__current-name" x-text="selectedSubjectName"></span>
                   <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">

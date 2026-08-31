@@ -50,8 +50,11 @@ const parseStudyTime = (text) => {
 document.addEventListener("alpine:init", () => {
   Alpine.store("storage", Storage);
   Alpine.store("category", Category);
-
   Alpine.data("popup", AlpinePopup);
+
+  Alpine.store("subjectDropdown", {
+    createdName: null,
+  });
 
   Alpine.data("body", () => ({
     async init() {
@@ -64,8 +67,9 @@ document.addEventListener("alpine:init", () => {
         confirm: "記録",
         type: "success",
         validate: (content) => {
-          const inputs = content.querySelectorAll(".popup__input");
-          return [...inputs].every((input) => input.value.trim() !== "");
+          const name = content.querySelector(".dropdown__current-name");
+          const time = content.querySelector(".popup__input");
+          return name !== null && name.textContent.trim() !== "" && time !== null && time.value.trim() !== "";
         },
       });
 
@@ -277,7 +281,7 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      const name = res.content.querySelector('input[name="name"]').value;
+      const name = res.content.querySelector(".dropdown__current-name").textContent;
       const time = res.content.querySelector('input[name="time"]').value;
       const seconds = parseStudyTime(time);
 
@@ -476,6 +480,51 @@ document.addEventListener("alpine:init", () => {
 
       this.name = record.name;
       this.time = formatStudyTime(secToHrs(seconds), secToMin(seconds));
+    },
+  }));
+
+  Alpine.data("subjectDropdown", () => ({
+    isOpen: false,
+    selectedSubjectName: null,
+
+    init() {
+      this.update();
+
+      this.listener = () => {
+        this.update();
+      };
+
+      document.addEventListener("popup-changed", this.listener);
+    },
+
+    destroy() {
+      document.removeEventListener("popup-changed", this.listener);
+    },
+
+    update() {
+      if (Popup.context === this.$el.parentElement.dataset.content) {
+        this.selectedSubjectName = this.$store.subjectDropdown.createdName;
+        this.$store.subjectDropdown.createdName = null;
+      }
+    },
+
+    selectSubject(subjectName) {
+      this.selectedSubjectName = subjectName;
+      this.isOpen = false;
+
+      this.$nextTick(() => {
+        this.$el.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+    },
+
+    async createNewSubject() {
+      const res = await Popup.open("create-new-subject");
+
+      if (!res.action) {
+        return;
+      }
+
+      this.$store.subjectDropdown.createdName = res.content.querySelector(".popup__input").value;
     },
   }));
 });
