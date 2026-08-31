@@ -34,6 +34,19 @@ const formatStudyTime = (hours, minutes) => {
   return `${hours}h${minutes}m`;
 };
 
+const parseStudyTime = (text) => {
+  const match = text.match(/^(?:(\d+)h)?(?:(\d+)m)?$/);
+
+  if (!match || (!match[1] && !match[2])) {
+    return null;
+  }
+
+  const hours = Number(match[1] ?? 0);
+  const minutes = Number(match[2] ?? 0);
+
+  return hours * 3600 + minutes * 60;
+};
+
 document.addEventListener("alpine:init", () => {
   Alpine.store("storage", Storage);
   Alpine.store("category", Category);
@@ -264,7 +277,11 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
-      console.log("edit", recordId);
+      const name = res.content.querySelector('input[x-model="name"]').value;
+      const time = res.content.querySelector('input[x-model="time"]').value;
+
+      const seconds = parseStudyTime(time);
+      console.log(name, seconds);
     },
   }));
 
