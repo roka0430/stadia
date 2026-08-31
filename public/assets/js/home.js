@@ -4,6 +4,36 @@ import Category from "./stores/Category.js";
 import Popup from "./popup/Popup.js";
 import AlpinePopup from "./popup/AlpinePopup.js";
 
+const secToHrs = (seconds) => {
+  return Math.floor(seconds / 3600);
+};
+
+const secToMin = (seconds) => {
+  return Math.floor((seconds % 3600) / 60);
+};
+
+const formatTime = (time) => {
+  const seconds = time ?? 0;
+
+  return {
+    hours: String(secToHrs(seconds)).padStart(2, "0"),
+    minutes: String(secToMin(seconds)).padStart(2, "0"),
+    seconds: String(seconds % 60).padStart(2, "0"),
+  };
+};
+
+const formatStudyTime = (hours, minutes) => {
+  if (hours === 0) {
+    return `${minutes}m`;
+  }
+
+  if (minutes === 0) {
+    return `${hours}h`;
+  }
+
+  return `${hours}h${minutes}m`;
+};
+
 document.addEventListener("alpine:init", () => {
   Alpine.store("storage", Storage);
   Alpine.store("category", Category);
@@ -116,27 +146,15 @@ document.addEventListener("alpine:init", () => {
     },
 
     calcStudyData(seconds) {
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const hours = Math.floor(seconds / 3600);
+      const hours = secToHrs(seconds);
+      const minutes = secToMin(seconds);
 
       return {
-        seconds: seconds,
-        minutes: minutes,
         hours: hours,
-        string: this.formatStudyTime(hours, minutes),
+        minutes: minutes,
+        seconds: seconds,
+        string: formatStudyTime(hours, minutes),
       };
-    },
-
-    formatStudyTime(hours, minutes) {
-      if (hours === 0) {
-        return `${minutes}m`;
-      }
-
-      if (minutes === 0) {
-        return `${hours}h`;
-      }
-
-      return `${hours}h${minutes}m`;
     },
 
     calcPercent(numerator, denominator) {
@@ -294,13 +312,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     get formattedTime() {
-      const seconds = this.time ?? 0;
-
-      return {
-        hours: String(Math.floor(seconds / 3600)).padStart(2, "0"),
-        minutes: String(Math.floor((seconds % 3600) / 60)).padStart(2, "0"),
-        seconds: String(seconds % 60).padStart(2, "0"),
-      };
+      return formatTime(this.time);
     },
 
     async exitStudy() {
@@ -411,8 +423,10 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
+      const seconds = record.time;
+
       this.name = record.name;
-      this.time = record.time;
+      this.time = formatStudyTime(secToHrs(seconds), secToMin(seconds));
     },
   }));
 });
