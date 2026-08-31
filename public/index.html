@@ -249,6 +249,18 @@
           <button class="popup__exit" @click="cancel()">×</button>
         </div>
         <div class="popup__contents" x-ref="popupContents" @input="input()">
+          <template x-if="context === 'edit-record'" x-data="popupEditRecord">
+            <div class="popup__content" data-content="edit-record">
+              <label class="popup__input-label">
+                <span>科目名</span>
+                <input type="text" class="popup__input" x-model="name">
+              </label>
+              <label class="popup__input-label">
+                <span>学習時間</span>
+                <input type="text" class="popup__input" x-model="time">
+              </label>
+            </div>
+          </template>
           <template x-if="context === 'delete-record'">
             <div class="popup__content" data-content="delete-record">
               <p>この記録を削除しますか？</p>

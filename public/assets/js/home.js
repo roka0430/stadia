@@ -25,6 +25,16 @@ document.addEventListener("alpine:init", () => {
         },
       });
 
+      Popup.register("edit-record", {
+        title: "学習記録の編集",
+        confirm: "変更",
+        type: "success",
+        validate: (content) => {
+          const inputs = content.querySelectorAll(".popup__input");
+          return [...inputs].every((input) => input.value.trim() !== "");
+        },
+      });
+
       Popup.register("exit-study", {
         title: "学習を終了する",
         confirm: "終了",
@@ -230,6 +240,12 @@ document.addEventListener("alpine:init", () => {
     },
 
     async editRecord(recordId) {
+      const res = await Popup.open("edit-record");
+
+      if (!res.action) {
+        return;
+      }
+
       console.log("edit", recordId);
     },
   }));
@@ -373,6 +389,19 @@ document.addEventListener("alpine:init", () => {
       }
 
       this.selectedSubjectName = res.content.querySelector(".popup__input").value;
+    },
+  }));
+
+  Alpine.data("popupEditRecord", () => ({
+    name: "",
+    time: 0,
+
+    init() {
+      document.addEventListener("popup-changed", () => {
+        if (Popup.context === "edit-record") {
+          console.log("open");
+        }
+      });
     },
   }));
 });
