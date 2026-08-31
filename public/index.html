@@ -281,7 +281,6 @@
                   </div>
                 </div>
               </div>
-
               <label class="popup__input-label">
                 <span>学習時間</span>
                 <input type="text" class="popup__input" name="time" placeholder="例: 1h30m" @focus="$el.select()" autocomplete="off">
@@ -314,10 +313,10 @@
               <p>学習記録を破棄して終了しますか？</p>
             </div>
           </template>
-          <template x-if="context === 'record-study'" x-data="popupRecordStudy">
+          <template x-if="context === 'record-study'">
             <div class="popup__content" data-content="record-study">
               <p>科目を選択してください。</p>
-              <div class="dropdown popup__dropdown" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
+              <div class="dropdown popup__dropdown" x-data="subjectDropdown" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
                 <button class="dropdown__current" @click="isOpen = !isOpen">
                   <span class="dropdown__current-name" x-text="selectedSubjectName"></span>
                   <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">

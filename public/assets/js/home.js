@@ -425,38 +425,6 @@ document.addEventListener("alpine:init", () => {
     },
   }));
 
-  Alpine.data("popupRecordStudy", () => ({
-    isOpen: false,
-    selectedSubjectName: null,
-
-    init() {
-      document.addEventListener("popup-changed", () => {
-        if (Popup.context === "record-study") {
-          this.selectedSubjectName = null;
-        }
-      });
-    },
-
-    selectSubject(subjectName) {
-      this.selectedSubjectName = subjectName;
-      this.isOpen = false;
-
-      this.$nextTick(() => {
-        this.$el.dispatchEvent(new Event("input", { bubbles: true }));
-      });
-    },
-
-    async createNewSubject() {
-      const res = await Popup.open("create-new-subject");
-
-      if (!res.action) {
-        return;
-      }
-
-      this.selectedSubjectName = res.content.querySelector(".popup__input").value;
-    },
-  }));
-
   Alpine.data("popupEditRecord", () => ({
     name: "",
     time: 0,
