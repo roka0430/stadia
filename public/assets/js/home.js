@@ -260,6 +260,10 @@ document.addEventListener("alpine:init", () => {
       this.$store.storage.set("isStudying", true);
     },
 
+    addStudyRecord() {
+      console.log("add");
+    },
+
     async deleteRecord(recordId) {
       const res = await Popup.open("delete-record");
 
