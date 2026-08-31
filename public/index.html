@@ -253,11 +253,11 @@
             <div class="popup__content" data-content="edit-record">
               <label class="popup__input-label">
                 <span>科目名</span>
-                <input type="text" class="popup__input" name="name" x-model="name" @focus="$el.select()">
+                <input type="text" class="popup__input" name="name" x-model="name" @focus="$el.select()" autocomplete="off">
               </label>
               <label class="popup__input-label">
                 <span>学習時間</span>
-                <input type="text" class="popup__input" name="time" x-model="time" @focus="$el.select()">
+                <input type="text" class="popup__input" name="time" placeholder="例: 1h30m" x-model="time" @focus="$el.select()" autocomplete="off">
               </label>
             </div>
           </template>
