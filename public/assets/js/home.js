@@ -240,7 +240,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     async editRecord(recordId) {
-      const res = await Popup.open("edit-record");
+      const res = await Popup.open("edit-record", { id: recordId });
 
       if (!res.action) {
         return;
@@ -399,9 +399,20 @@ document.addEventListener("alpine:init", () => {
     init() {
       document.addEventListener("popup-changed", () => {
         if (Popup.context === "edit-record") {
-          console.log("open");
+          this.setPopupDefault(Popup.current.metadata.id);
         }
       });
+    },
+
+    setPopupDefault(recordId) {
+      const record = this.$store.category.records.find((record) => record.id === recordId);
+
+      if (!record) {
+        return;
+      }
+
+      this.name = record.name;
+      this.time = record.time;
     },
   }));
 });

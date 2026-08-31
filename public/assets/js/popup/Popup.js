@@ -20,13 +20,13 @@ class Popup {
     this.popups[context] = { title, confirm, type, validate };
   }
 
-  open(context) {
+  open(context, metadata = null) {
     if (!this.popups[context]) {
       return null;
     }
 
     return new Promise((resolve) => {
-      this.stacks.push({ context, resolve });
+      this.stacks.push({ context, metadata, resolve });
       this.notify();
     });
   }
