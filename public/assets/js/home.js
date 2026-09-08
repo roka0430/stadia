@@ -76,7 +76,7 @@ document.addEventListener("alpine:init", () => {
       Popup.register("add-record-error", {
         title: "エラー",
         confirm: "OK",
-        type: "success",
+        type: "alert",
         validate: null,
       });
 

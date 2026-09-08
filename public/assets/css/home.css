@@ -815,7 +815,8 @@ header {
   border: none;
 }
 
-.popup__action[data-type="success"] {
+.popup__action[data-type="success"],
+.popup__action[data-type="alert"] {
   background: var(--color-success);
 }
 

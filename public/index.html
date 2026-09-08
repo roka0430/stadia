@@ -364,7 +364,7 @@
           </template>
         </div>
         <div class="popup__controls">
-          <button class="popup__cancel" @click="cancel()">キャンセル</button>
+          <button class="popup__cancel" x-show="type !== 'alert'" @click="cancel()">キャンセル</button>
           <button class="popup__action" x-text="confirm" :disabled="disable" :data-type="type" @click="action()"></button>
         </div>
       </div>
