@@ -47,9 +47,32 @@ main {
 }
 
 .categories__item {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+
   padding-block: 16px 17px;
   padding-inline: 20px;
 
   background: var(--color-surface);
   border-radius: 8px;
+}
+
+.category__name {
+  flex: 1;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.category__name::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 15px;
+  background: linear-gradient(to right, transparent 0%, var(--color-surface) 100%);
 }
