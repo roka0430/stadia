@@ -73,6 +73,13 @@ document.addEventListener("alpine:init", () => {
         },
       });
 
+      Popup.register("add-record-error", {
+        title: "エラー",
+        confirm: "OK",
+        type: "success",
+        validate: null,
+      });
+
       Popup.register("delete-record", {
         title: "学習記録の削除",
         confirm: "削除",
@@ -286,6 +293,7 @@ document.addEventListener("alpine:init", () => {
       const seconds = parseStudyTime(time);
 
       if (seconds === null) {
+        await Popup.open("add-record-error");
         return;
       }
 

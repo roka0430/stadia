@@ -287,6 +287,11 @@
               </label>
             </div>
           </template>
+          <template x-if="context === 'add-record-error'">
+            <div class="popup__content" data-content="add-record-error">
+              <p>時間の入力形式が正しくないため、記録できませんでした。</p>
+            </div>
+          </template>
           <template x-if="context === 'edit-record'" x-data="popupEditRecord">
             <div class="popup__content" data-content="edit-record">
               <label class="popup__input-label">
