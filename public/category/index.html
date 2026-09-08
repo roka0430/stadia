@@ -11,18 +11,20 @@
 </head>
 
 <body>
-  <main>
+  <main x-data="main">
     <section class="control">
-      <button class="control__new">New</button>
+      <button class="control__new" @click="newCategory()">New</button>
     </section>
     <section class="categories">
-      <div class="categories__item category">
-        <div class="category__name">カテゴリ名</div>
-        <div class="category__menu">
-          <button>edit</button>
-          <button>delete</button>
+      <template x-for="category in categories">
+        <div class="categories__item category">
+          <div class="category__name" x-text="category.name"></div>
+          <div class="category__menu">
+            <button @click="editCategory(category.id)">edit</button>
+            <button @click="deleteCategory(category.id)">delete</button>
+          </div>
         </div>
-      </div>
+      </template>
     </section>
   </main>
 
