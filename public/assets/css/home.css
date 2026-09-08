@@ -22,14 +22,41 @@ body {
 
 header {
   display: flex;
+  gap: 12px;
   justify-content: right;
+
+  height: 40px;
 }
 
 /*------------------------------ category ------------------------------*/
 
 .category {
   width: 350px;
-  height: 40px;
+  height: 100%;
+}
+
+.edit-category {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  aspect-ratio: 1 / 1;
+
+  background: none;
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.edit-category svg {
+  stroke: var(--color-text-muted);
+  transition: all 0.1s;
+}
+
+.edit-category:hover svg {
+  stroke: var(--color-text);
 }
 
 /*------------------------------ home ------------------------------*/
