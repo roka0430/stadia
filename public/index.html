@@ -12,7 +12,7 @@
 <body x-data="body">
   <div class="wrapper">
     <header>
-      <div class="dropdown category" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false">
+      <div class="dropdown category" x-data="category" :class="{ 'opened': isOpen }" @click.outside="isOpen = false" title="カテゴリを選択">
         <button class="dropdown__current" @click="isOpen = !isOpen">
           <span class="dropdown__current-name" x-text="$store.category.currentCategory?.name"></span>
           <svg class="dropdown__indicator" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-selector">
@@ -32,7 +32,7 @@
           </template>
         </div>
       </div>
-      <button class="edit-category">
+      <button class="edit-category" title="カテゴリを編集">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-category-plus">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M4 4h6v6h-6v-6" />
@@ -194,14 +194,14 @@
               <span class="records__name" x-text="record.name"></span>
               <span class="records__time" x-text="calcStudyData(record.time).string"></span>
               <span class="records__menu">
-                <button @click="editRecord(record.id)">
+                <button @click="editRecord(record.id)" title="記録を編集">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-pencil">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                     <path d="M13.5 6.5l4 4" />
                   </svg>
                 </button>
-                <button @click="deleteRecord(record.id)">
+                <button @click="deleteRecord(record.id)" title="記録を削除">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M4 7l16 0" />
