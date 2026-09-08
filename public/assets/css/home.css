@@ -362,7 +362,9 @@ header {
 }
 
 .statistics__weekly-label {
+  width: 10%;
   font-size: 0.9rem;
+  text-align: center;
 }
 
 /* total */
