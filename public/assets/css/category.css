@@ -16,11 +16,36 @@ main {
 
 .control {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
 
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: solid 1px var(--color-border);
+}
+
+.control__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  background: none;
+  border: solid 1px var(--color-border);
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.control__back svg {
+  stroke: var(--color-text-muted);
+  transform: translateX(-0.5px);
+  transition: all 0.1s;
+}
+
+.control__back:hover svg {
+  stroke: var(--color-text);
 }
 
 .control__new {
