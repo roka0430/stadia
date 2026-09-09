@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const { name } = req.body;
 
-  if (name == null) {
+  if (typeof name !== "string" || name.trim() === "") {
     return res.status(400).json({
       error: "name is required.",
     });
@@ -69,7 +69,7 @@ router.patch("/:id", (req, res) => {
   const id = Number(req.params.id);
   const { name } = req.body;
 
-  if (name == null) {
+  if (typeof name !== "string" || name.trim() === "") {
     return res.status(400).json({
       message: "name is required.",
     });
