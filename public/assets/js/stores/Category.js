@@ -124,17 +124,16 @@ export default {
   },
 
   async init() {
-    this.categories = await loadCategories();
+    this.isLoading = true;
 
-    if (this.categories.length === 0) {
-      this.currentCategory = null;
+    try {
+      this.categories = await loadCategories();
+
+      const categoryId = this.resolveCategoryId(Alpine.store("storage").get("currentCategoryId"));
+      await this.setCurrentCategory(categoryId);
+    } finally {
       this.isLoading = false;
-      return;
     }
-
-    const categoryId = this.resolveCategoryId(Alpine.store("storage").get("currentCategoryId"));
-    await this.setCurrentCategory(categoryId);
-    this.isLoading = false;
   },
 
   async setCurrentCategory(categoryId) {

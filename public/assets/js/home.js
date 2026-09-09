@@ -52,6 +52,12 @@ document.addEventListener("alpine:init", () => {
   Alpine.store("category", Category);
   Alpine.data("popup", AlpinePopup);
 
+  window.addEventListener("pageshow", async (event) => {
+    if (event.persisted) {
+      await Alpine.store("category").init();
+    }
+  });
+
   Alpine.store("subjectDropdown", {
     createdName: null,
   });
