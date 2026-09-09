@@ -91,6 +91,34 @@ router.patch("/:id", (req, res) => {
   return res.status(200).json({ id, name });
 });
 
+router.delete("/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  const indexData = load(fs.readFileSync(INDEX_PATH, "utf-8"));
+  const targetIndex = indexData.findIndex((datum) => datum.id === id);
+
+  if (targetIndex === -1) {
+    return res.status(404).json({
+      error: "category id not found.",
+    });
+  }
+
+  const categoryPath = `${CATEGORY_DIR}/${id}.yaml`;
+
+  if (!fs.existsSync(categoryPath)) {
+    return res.status(404).json({
+      error: "category file not found.",
+    });
+  }
+
+  indexData.splice(targetIndex, 1);
+  fs.writeFileSync(INDEX_PATH, dump(indexData), "utf-8");
+
+  fs.unlinkSync(categoryPath);
+
+  res.status(204).send();
+});
+
 router.post("/:id", (req, res) => {
   const categoryId = Number(req.params.id);
   const { name, time, date } = req.body;
