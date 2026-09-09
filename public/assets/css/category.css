@@ -24,6 +24,10 @@ main {
 }
 
 .control__new {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
   padding-block: 3px 5px;
   padding-inline: 14px;
 
@@ -35,6 +39,10 @@ main {
   font-weight: bold;
 
   cursor: pointer;
+}
+
+.control__new svg {
+  transform: translateY(1px);
 }
 
 .categories {
@@ -75,4 +83,38 @@ main {
 
   width: 15px;
   background: linear-gradient(to right, transparent 0%, var(--color-surface) 100%);
+}
+
+.category__menu {
+  opacity: 0;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  transition: all 0.1s;
+}
+
+.categories__item:hover .category__menu,
+.categories__item:focus-within .category__menu {
+  opacity: 1;
+}
+
+.category__menu button {
+  display: flex;
+  align-items: center;
+
+  background: none;
+  border: none;
+
+  cursor: pointer;
+}
+
+.category__menu svg {
+  stroke: var(--color-text-muted);
+  transition: all 0.1s;
+}
+
+.category__menu button:hover svg {
+  stroke: var(--color-text);
 }
