@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/popup.css">
   <link rel="stylesheet" href="../assets/css/category.css">
   <title>Stadia | Category</title>
 </head>
@@ -27,6 +28,46 @@
       </template>
     </section>
   </main>
+
+  <div class="popup" x-data="popup" x-show="context !== null" x-cloak @keydown.window.escape="if (context !== null) cancel()">
+    <div class="popup__body" @click.outside="cancel()">
+      <div class="popup__header">
+        <div class="popup__title" x-text="title"></div>
+        <button class="popup__exit" @click="cancel()">×</button>
+      </div>
+      <div class="popup__contents" x-ref="popupContents" @input="input()">
+        <template x-if="context === 'new-category'">
+          <div class="popup__content" data-content="new-category" x-data="popupCategoryName">
+            <label class="popup__input-label">
+              <span>カテゴリ名</span>
+              <input type="text" class="popup__input" x-model="name" @focus="$el.select()" autocomplete="off">
+            </label>
+          </div>
+        </template>
+        <template x-if="context === 'edit-category'">
+          <div class="popup__content" data-content="edit-category" x-data="popupCategoryName">
+            <label class="popup__input-label">
+              <span>カテゴリ名</span>
+              <input type="text" class="popup__input" x-model="name" @focus="$el.select()" autocomplete="off">
+            </label>
+          </div>
+        </template>
+        <template x-if="context === 'delete-category'">
+          <div class="popup__content" data-content="delete-category">
+            <p>このカテゴリを削除しますか？</p>
+            <label class="popup__checkbox">
+              <input type="checkbox">
+              <span>このカテゴリと学習記録を削除することに同意します</span>
+            </label>
+          </div>
+        </template>
+      </div>
+      <div class="popup__controls">
+        <button class="popup__cancel" x-show="type !== 'alert'" @click="cancel()">キャンセル</button>
+        <button class="popup__action" x-text="confirm" :disabled="disable" :data-type="type" @click="action()"></button>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="../assets/js/category.js" defer></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
