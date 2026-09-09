@@ -379,6 +379,13 @@
         </div>
       </div>
     </div>
+
+    <div class="category-guide" x-show="!$store.category.isLoading && $store.category.categories.length === 0" x-cloak>
+      <div class="category-guide__content">
+        <p>利用可能なカテゴリがありません。</p>
+        <a href="category" class="category-guide__link">カテゴリを作成する</a>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="assets/js/home.js" defer></script>

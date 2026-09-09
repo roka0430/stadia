@@ -758,3 +758,47 @@ header {
 .study__start-stop-content span {
   transform: translateY(-1px);
 }
+
+/*------------------------------ category-guide ------------------------------*/
+
+.category-guide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  inset: 0;
+
+  background: rgb(from var(--color-bg) r g b / 75%);
+
+  z-index: 20;
+}
+
+.category-guide__content {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 24px;
+
+  background: var(--color-surface);
+  border: solid 1px var(--color-border);
+  border-radius: 8px;
+}
+
+.category-guide__link {
+  padding-block: 6px 8px;
+  padding-inline: 16px;
+
+  background: var(--color-success);
+  border-radius: 5px;
+
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.category-guide__link:hover {
+  text-decoration: none;
+}
