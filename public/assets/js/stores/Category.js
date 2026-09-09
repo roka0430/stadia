@@ -35,7 +35,7 @@ const recordStudy = async (categoryId, name, time) => {
 };
 
 const deleteRecord = async (categoryId, recordId) => {
-  const res = await fetch(`api/category/${categoryId}/record/${recordId}`, {
+  const res = await fetch(`/api/category/${categoryId}/record/${recordId}`, {
     method: "DELETE",
   });
 
@@ -47,7 +47,7 @@ const deleteRecord = async (categoryId, recordId) => {
 };
 
 const editRecord = async (categoryId, recordId, name, time) => {
-  const res = await fetch(`api/category/${categoryId}/record/${recordId}`, {
+  const res = await fetch(`/api/category/${categoryId}/record/${recordId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, time }),
@@ -62,6 +62,46 @@ const editRecord = async (categoryId, recordId, name, time) => {
 
 const sortRecords = (records) => {
   records.sort((a, b) => new Date(b.date) - new Date(a.date));
+};
+
+const createCategory = async (name) => {
+  const res = await fetch(`/api/category`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to create category");
+  }
+
+  return await res.json();
+};
+
+const editCategory = async (categoryId, name) => {
+  const res = await fetch(`/api/category/${categoryId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to edit category");
+  }
+
+  return await res.json();
+};
+
+const deleteCategory = async (categoryId) => {
+  const res = await fetch(`/api/category/${categoryId}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to delete category");
+  }
+
+  return true;
 };
 
 export default {
@@ -162,6 +202,55 @@ export default {
       if (record) {
         record.name = name;
         record.time = time;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async createCategory(name) {
+    if (name == null) {
+      return;
+    }
+
+    const category = await createCategory(name);
+    this.categories.push(category);
+
+    return category;
+  },
+
+  async editCategory(categoryId, name) {
+    if (categoryId == null || name == null) {
+      return;
+    }
+
+    try {
+      const category = await editCategory(categoryId, name);
+
+      const target = this.categories.find((category) => category.id === categoryId);
+
+      if (target) {
+        target.name = category.name;
+      }
+
+      return category;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async deleteCategory(categoryId) {
+    if (categoryId == null) {
+      return;
+    }
+
+    try {
+      await deleteCategory(categoryId);
+
+      const index = this.categories.findIndex((category) => category.id === categoryId);
+
+      if (index !== -1) {
+        this.categories.splice(index, 1);
       }
     } catch (error) {
       console.error(error);
