@@ -105,6 +105,7 @@ const deleteCategory = async (categoryId) => {
 };
 
 export default {
+  isLoading: true,
   categories: [],
   currentCategory: null,
 
@@ -126,12 +127,14 @@ export default {
     this.categories = await loadCategories();
 
     if (this.categories.length === 0) {
-      console.log("no-category");
+      this.currentCategory = null;
+      this.isLoading = false;
       return;
     }
 
     const categoryId = this.resolveCategoryId(Alpine.store("storage").get("currentCategoryId"));
     await this.setCurrentCategory(categoryId);
+    this.isLoading = false;
   },
 
   async setCurrentCategory(categoryId) {
