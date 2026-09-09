@@ -374,6 +374,10 @@ header {
   background: var(--color-primary);
 }
 
+.statistics__weekly-bar[data-seconds="0"] {
+  background: rgb(from var(--color-primary) r g b / 35%);
+}
+
 .statistics__weekly-value {
   position: absolute;
   bottom: calc(100% + 4px);
@@ -381,6 +385,10 @@ header {
   transform: translateX(-50%);
 
   font-size: 0.85rem;
+}
+
+.statistics__weekly-bar[data-seconds="0"] .statistics__weekly-value {
+  color: var(--color-text-muted);
 }
 
 .statistics__weekly-labels {
