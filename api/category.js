@@ -12,6 +12,32 @@ router.get("/", (req, res) => {
   res.json(indexData);
 });
 
+router.post("/", (req, res) => {
+  const { name } = req.body;
+
+  if (name == null) {
+    return res.status(400).json({
+      error: "name is required.",
+    });
+  }
+
+  const indexData = load(fs.readFileSync(INDEX_PATH, "utf-8"));
+  const idList = indexData.map(({ id }) => id);
+
+  let id = 1;
+  while (idList.includes(id)) id++;
+
+  indexData.push({ id, name });
+  fs.writeFileSync(INDEX_PATH, dump(indexData), "utf-8");
+
+  const categoryPath = `${CATEGORY_DIR}/${id}.yaml`;
+  const defaultCategoryData = { records: [] };
+
+  fs.writeFileSync(categoryPath, dump(defaultCategoryData), "utf-8");
+
+  res.status(201).json({ id, name });
+});
+
 router.get("/:id", (req, res) => {
   const id = Number(req.params.id);
 
