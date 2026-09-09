@@ -12,16 +12,16 @@ document.addEventListener("alpine:init", () => {
       return this.$store.category.categories;
     },
 
-    newCategory() {
-      console.log("new");
+    async newCategory() {
+      // await this.$store.category.createCategory("new");
     },
 
-    editCategory(categoryId) {
-      console.log("edit", categoryId);
+    async editCategory(categoryId) {
+      // await this.$store.category.editCategory(categoryId, "edited");
     },
 
-    deleteCategory(categoryId) {
-      console.log("delete", categoryId);
+    async deleteCategory(categoryId) {
+      // await this.$store.category.deleteCategory(categoryId);
     },
   }));
 });
