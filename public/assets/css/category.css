@@ -79,6 +79,11 @@ main {
   scrollbar-width: none;
 }
 
+.categories__no-category {
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
 .categories__item {
   display: flex;
   gap: 15px;

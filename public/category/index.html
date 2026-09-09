@@ -31,6 +31,9 @@
       </button>
     </section>
     <section class="categories">
+      <template x-if="categories.length === 0">
+        <p class="categories__no-category" x-cloak>利用可能なカテゴリがありません。新規作成してください。</p>
+      </template>
       <template x-for="category in categories">
         <div class="categories__item category">
           <div class="category__name" x-text="category.name"></div>
