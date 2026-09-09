@@ -65,13 +65,39 @@ router.get("/:id", (req, res) => {
   res.json(category);
 });
 
+router.patch("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const { name } = req.body;
+
+  if (name == null) {
+    return res.status(400).json({
+      message: "name is required.",
+    });
+  }
+
+  const indexData = load(fs.readFileSync(INDEX_PATH, "utf-8"));
+  const target = indexData.find((datum) => datum.id === id);
+
+  if (!target) {
+    return res.status(404).json({
+      error: "category id not found.",
+    });
+  }
+
+  target.name = name;
+
+  fs.writeFileSync(INDEX_PATH, dump(indexData), "utf-8");
+
+  return res.status(200).json({ id, name });
+});
+
 router.post("/:id", (req, res) => {
   const categoryId = Number(req.params.id);
   const { name, time, date } = req.body;
 
   if (name == null || time == null || date == null) {
     return res.status(400).json({
-      error: "name, time, and date are required",
+      error: "name, time, and date are required.",
     });
   }
 
