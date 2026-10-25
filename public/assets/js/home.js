@@ -335,6 +335,8 @@ document.addEventListener("alpine:init", () => {
     },
   }));
 
+  // TODO
+
   Alpine.data("study", () => ({
     timeout: null,
 
@@ -366,6 +368,10 @@ document.addEventListener("alpine:init", () => {
       return this.$store.storage.get("time");
     },
 
+    get lastTickTime() {
+      return this.$store.storage.get("lastTickTime");
+    },
+
     set isStudying(isStudying) {
       this.$store.storage.set("isStudying", isStudying);
     },
@@ -376,6 +382,10 @@ document.addEventListener("alpine:init", () => {
 
     set time(time) {
       this.$store.storage.set("time", time);
+    },
+
+    set lastTickTime(lastTickTime) {
+      this.$store.storage.set("lastTickTime", lastTickTime);
     },
 
     get formattedTime() {
@@ -396,6 +406,7 @@ document.addEventListener("alpine:init", () => {
     timerClose() {
       clearTimeout(this.timeout);
       this.time = 0;
+      this.lastTickTime = null;
       this.isTimerPaused = true;
       this.isStudying = false;
     },
@@ -423,6 +434,7 @@ document.addEventListener("alpine:init", () => {
       this.isTimerPaused = !this.isTimerPaused;
 
       if (this.isTimerPaused) {
+        this.lastTickTime = null;
         clearTimeout(this.timeout);
       }
     },
@@ -432,8 +444,19 @@ document.addEventListener("alpine:init", () => {
         return;
       }
 
+      const now = Date.now();
+
+      if (this.lastTickTime) {
+        const elapsed = now - this.lastTickTime;
+        const elapsedSeconds = Math.floor(elapsed / 1000);
+
+        this.time += elapsedSeconds;
+        this.lastTickTime += elapsedSeconds * 1000;
+      } else {
+        this.lastTickTime = now;
+      }
+
       this.timeout = setTimeout(() => {
-        this.time++;
         this.tick();
       }, 1000);
     },

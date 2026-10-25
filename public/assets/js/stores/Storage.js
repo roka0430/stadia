@@ -18,6 +18,11 @@ const STORAGE = {
     key: "stadia:time",
     default: 0,
   },
+
+  lastTickTime: {
+    key: "stadia:last_tick_time",
+    default: null,
+  },
 };
 
 const load = () => {
