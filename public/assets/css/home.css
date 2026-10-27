@@ -680,7 +680,7 @@ header {
 
 .study__timer-content {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   font-size: 10rem;
 }
 
@@ -690,10 +690,15 @@ header {
 }
 
 .study__timer-content .colon {
-  position: relative;
-  top: -0.08em;
+  transform: translateY(-0.15em);
   margin-inline: 0.1em;
   font-size: 0.8em;
+}
+
+.study__timer-content .seconds {
+  width: 1em;
+  transform: translateY(-0.1em);
+  font-size: 0.2em;
 }
 
 .study__timer-indicator {
