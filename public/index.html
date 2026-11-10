@@ -174,12 +174,12 @@
             <div class="total__card-value"><span x-text="$store.category.records.length"></span>回</div>
           </div>
           <div class="total__card">
-            <div class="total__card-label">学習日数</div>
+            <div class="total__card-label">総学習日数</div>
             <div class="total__card-value"><span x-text="studyDates.length"></span>日</div>
           </div>
           <div class="total__card">
-            <div class="total__card-label">平均学習時間</div>
-            <div class="total__card-value"><span x-text="calcStudyData($store.category.records.length ? totalStudyData.seconds / $store.category.records.length : 0).string"></span></div>
+            <div class="total__card-label">一日平均学習時間</div>
+            <div class="total__card-value"><span x-text="calcStudyData(studyDates.length ? totalStudyData.seconds / studyDates.length : 0).string"></span></div>
           </div>
         </div>
       </section>

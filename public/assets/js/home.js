@@ -251,7 +251,7 @@ document.addEventListener("alpine:init", () => {
     },
 
     get studyDates() {
-      const dates = this.$store.category.records.map(({ date }) => date);
+      const dates = this.$store.category.records.map(({ date }) => this.formatDate(date, "YYYYMMDD"));
       return [...new Set(dates)];
     },
 
